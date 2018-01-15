@@ -1,0 +1,30 @@
+{
+  "name": "@fjandin/config-man",
+  "version": "0.1.2",
+  "description": "Config manager",
+  "main": "index.js",
+  "author": "René Bischoff <rene.bischoff@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "files": [
+    "lib/",
+    "index.js",
+    "package.json",
+    "yarn.lock",
+    "README.md"
+  ],
+  "scripts": {
+    "eslint": "eslint .",
+    "publish": "yarn publish --access public"
+  },
+  "dependencies": {
+    "flat": "4.0.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "8.2.1",
+    "eslint": "4.15.0"
+  },
+  "peerDependencies": {
+    "aws-sdk": "^2.181.0"
+  }
+}
