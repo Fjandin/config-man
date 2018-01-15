@@ -43,8 +43,8 @@ module.exports.init = async function init(o = {}) {
 
         const options = {
             cwd: __dirname,
-            allowUnknown: false,
-            removeUnknown: false,
+            allowUnknown: !!o.allowUnknown,
+            removeUnknown: !!o.removeUnknown,
             configs: [...o.configs || []],
             schema: require(path.join(o.cwd || __dirname, 'config-man.json')).schema
         };
