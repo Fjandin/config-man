@@ -1,0 +1,7 @@
+{
+    "editor.formatOnSave": true,
+    "eslint.autoFixOnSave": false,
+    "tslint.autoFixOnSave": true,
+    "tslint.enable": true,
+    "typescript.tsdk": "node_modules/typescript/lib"
+}

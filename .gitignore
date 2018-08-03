@@ -1,4 +1,5 @@
 node_modules
-config-man.json
-config.json
-test.js
+yarn-error.log
+dist/
+coverage/
+.nyc_output/

@@ -1,30 +1,62 @@
 {
   "name": "@fjandin/config-man",
-  "version": "0.1.14",
+  "version": "1.0.0-beta.1",
   "description": "Config manager",
   "main": "index.js",
   "author": "René Bischoff <rene.bischoff@gmail.com>",
   "license": "MIT",
   "private": false,
-  "files": [
-    "lib/",
-    "index.js",
-    "package.json",
-    "yarn.lock",
-    "README.md"
-  ],
+  "nyc": {
+    "extension": [
+      ".ts"
+    ],
+    "include": [
+      "src/"
+    ],
+    "report-dir": "./coverage",
+    "reporter": [
+      "lcov",
+      "text-summary"
+    ]
+  },
   "scripts": {
-    "eslint": "eslint .",
-    "publish": "yarn publish --access public"
+    "peer": "yarn add --peer aws-sdk",
+    "tslint": "tslint -c tslint.json './src/**/*.ts' --project tsconfig.json",
+    "typecheck": "tsc --noEmit",
+    "test": "CM_test1_test1a=env CM_env_unknown=test nyc mocha --opts ./test/mocha.opts -r ts-node/register",
+    "test:watch": "nyc mocha --opts ./test/mocha-w.opts -r ts-node/register",
+    "build": "rm -rf dist; tsc; cp package.json ./dist; cp .npmrc ./dist",
+    "publish": "yarn build; cd dist; npm publish",
+    "publish:beta": "yarn build; cd dist; npm publish --tag beta"
   },
   "dependencies": {
-    "flat": "4.0.0"
+    "flat": "4.1.0"
   },
   "devDependencies": {
-    "babel-eslint": "8.2.1",
-    "eslint": "4.15.0"
+    "@types/chai-as-promised": "7.1.0",
+    "@types/chai-datetime": "0.0.32",
+    "@types/flat": "0.0.28",
+    "@types/mocha": "5.2.5",
+    "@types/mock-require": "2.0.0",
+    "@types/node": "8.10.23",
+    "@types/sinon": "5.0.1",
+    "@types/sinon-chai": "3.2.0",
+    "chai": "4.1.2",
+    "chai-as-promised": "7.1.1",
+    "chai-datetime": "1.5.0",
+    "mocha": "5.2.0",
+    "mock-require": "3.0.2",
+    "nyc": "12.0.2",
+    "prettier": "1.14.0",
+    "sinon": "6.1.4",
+    "sinon-chai": "3.2.0",
+    "ts-node": "7.0.0",
+    "tslint": "5.11.0",
+    "tslint-config-prettier": "1.14.0",
+    "tslint-config-standard": "7.1.0",
+    "typescript": "3.0.1"
   },
   "peerDependencies": {
-    "aws-sdk": "^2.181.0"
+    "aws-sdk": "2.286.2"
   }
 }
