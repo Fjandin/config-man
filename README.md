@@ -21,7 +21,7 @@ configMan.init({
     removeUnknown: true,
     configs: [
         {type: 'default'},
-        {type: 'awsDynamodb', tableName: 'Deimos-Configuration', region: 'eu-west-1'},
+        {type: 'awsDynamodb', tableName: 'Configuration-Table', region: 'eu-west-1'},
         {type: 'json', path: 'config.json'},
         {type: 'arg'},
         {type: 'env'}

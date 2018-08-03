@@ -1,6 +1,7 @@
 const unflatten = require('flat').unflatten;
 const path = require('path');
 const fs = require('fs');
+const realTypeOf = require('./lib/helpers').realTypeOf;
 
 const configTypes = {
     default: require('./lib/config/default'),
@@ -10,7 +11,7 @@ const configTypes = {
     awsDynamodb: require('./lib/config/aws-dynamodb')
 };
 
-const data = {
+const data = module.exports._data = {
     config: {},
     initialized: false,
     promise: {}
@@ -42,7 +43,8 @@ module.exports.init = async function init(o = {}) {
         }
 
         const options = {
-            cwd: __dirname,
+            cwd: o.cwd,
+            sync: !!o.sync,
             allowUnknown: !!o.allowUnknown,
             removeUnknown: !!o.removeUnknown,
             configs: [...o.configs || []],
@@ -56,13 +58,15 @@ module.exports.init = async function init(o = {}) {
                 if (options.removeUnknown) {
                     delete config[key];
                 } else if (!options.allowUnknown) {
-                    return [...a, `(${key}) of type <${typeof dataConfig[key]}> from (${dataItem.type}) is unknown`];
+                    return [...a, `(${key}) of type <${realTypeOf(dataConfig[key])}> from (${dataItem.type}) is unknown`];
                 }
             }
             return a;
         };
         for (let configItem of options.configs) {
-            const newConfig = await configTypes[configItem.type]({...configItem, schema: options.schema, cwd: options.cwd});
+            const newConfig = options.sync
+                ? configTypes[configItem.type]({...configItem, schema: options.schema, cwd: options.cwd, sync: options.sync})
+                : await configTypes[configItem.type]({...configItem, schema: options.schema, cwd: options.cwd, sync: options.sync});
             errors = Object.keys(newConfig).reduce(checkErrors(configItem, newConfig), errors);
             config = {
                 ...config,
@@ -72,8 +76,10 @@ module.exports.init = async function init(o = {}) {
 
         errors = options.schema.reduce((a, option) => {
             const value = config[option.key];
-            const type = typeof value;
-            if (!option.nullable && value === null) {
+            const type = realTypeOf(value);
+            if (option.nullable && value === null) {
+                return a;
+            } else if (!option.nullable && value === null) {
                 return [...a, `(${option.key}) is not nullable`];
             } else if (type !== option.type) {
                 return [...a, `(${option.key}) invalid type. Expected <${option.type}> got <${type}>`];
