@@ -1,6 +1,6 @@
 {
   "name": "@fjandin/config-man",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.8",
   "description": "Config manager",
   "main": "index.js",
   "author": "René Bischoff <rene.bischoff@gmail.com>",
@@ -25,9 +25,7 @@
     "typecheck": "tsc --noEmit",
     "test": "CM_test1_test1a=env CM_env_unknown=test nyc mocha --opts ./test/mocha.opts -r ts-node/register",
     "test:watch": "nyc mocha --opts ./test/mocha-w.opts -r ts-node/register",
-    "build": "rm -rf dist; tsc; cp package.json ./dist; cp .npmrc ./dist",
-    "publish": "yarn build; cd dist; npm publish",
-    "publish:beta": "yarn build; cd dist; npm publish --tag beta"
+    "build": "rm -rf dist; tsc; cp package.json ./dist; cp .npmrc ./dist"
   },
   "dependencies": {
     "flat": "4.1.0"
@@ -41,6 +39,7 @@
     "@types/node": "8.10.23",
     "@types/sinon": "5.0.1",
     "@types/sinon-chai": "3.2.0",
+    "aws-sdk-mock": "4.1.0",
     "chai": "4.1.2",
     "chai-as-promised": "7.1.1",
     "chai-datetime": "1.5.0",
@@ -57,6 +56,6 @@
     "typescript": "3.0.1"
   },
   "peerDependencies": {
-    "aws-sdk": "2.286.2"
+    "aws-sdk": "2.287.0"
   }
 }

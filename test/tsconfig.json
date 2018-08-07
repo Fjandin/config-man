@@ -14,7 +14,8 @@
         "baseUrl": "../src",
         "sourceMap": true,
         "paths": {
-            "*": ["*"]
+            "*": ["*"],
+            "index": ["index"]
         }
     },
     "exclude": ["dist"],

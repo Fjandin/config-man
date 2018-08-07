@@ -1,6 +1,3 @@
-const mockRequire = require('mock-require')
-mockRequire('aws-sdk', require('./../../../mock/aws-sdk'))
-
 import typeDynamodb from 'lib/config/dynamodb'
 import * as chai from 'chai'
 
@@ -14,6 +11,17 @@ describe('Config type dynamo db', () => {
             tableName: 'Test',
             region: 'eu-west-1'
         })
-        chai.expect(result).to.deep.equal({'test1.test1b': 123, 'db.unknown': 'dynamo'})
+        chai.expect(result).to.deep.equal({test3: 2, 'db.unknown': 'dynamo'})
+    })
+
+    it('should not handle sync (not supported)', async () => {
+        const result = () =>
+            typeDynamodb({
+                sync: true,
+                schema: configManJson.schema,
+                tableName: 'Test',
+                region: 'eu-west-1'
+            })
+        chai.expect(result).to.throw('This type does not support sync')
     })
 })

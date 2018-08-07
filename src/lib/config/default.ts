@@ -1,4 +1,4 @@
-import {OptionsConfigItemOptions} from 'index'
+import {OptionsConfigItemOptions} from './../../index'
 
 export default function getConfigDefault(
     options: OptionsConfigItemOptions

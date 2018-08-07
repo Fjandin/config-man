@@ -1,13 +1,13 @@
 import {unflatten} from 'flat'
 import * as path from 'path'
 import * as fs from 'fs'
-import {realTypeOf} from 'lib/helpers'
+import {realTypeOf} from './lib/helpers'
 
-import typeArg from 'lib/config/arg'
-import typeDefault from 'lib/config/default'
-import typeDynamodb from 'lib/config/dynamodb'
-import typeEnv from 'lib/config/env'
-import typeJson from 'lib/config/json'
+import typeArg from './lib/config/arg'
+import typeDefault from './lib/config/default'
+import typeDynamodb from './lib/config/dynamodb'
+import typeEnv from './lib/config/env'
+import typeJson from './lib/config/json'
 
 export interface SchemaItem<Type = any> {
     key: string
@@ -37,12 +37,11 @@ export interface OptionsConfigItemOptions {
 
 export interface OptionsConfigItem {
     type: ConfigType
-    options: OptionsConfigItemOptions
+    [key: string]: any
 }
 
 export interface Options {
     cwd?: string
-    sync?: boolean
     allowUnknown?: boolean
     removeUnknown?: boolean
     configs?: OptionsConfigItem[]
@@ -84,7 +83,7 @@ interface State {
     config: {[key: string]: any}
 }
 
-const STATE: State = {
+export const STATE: State = {
     initialized: false,
     promise: {
         resolve: () => true,
@@ -93,24 +92,48 @@ const STATE: State = {
     config: {}
 }
 
-export const ready = new Promise((resolve, reject) => {
+export let ready = new Promise((resolve, reject) => {
     STATE.promise.resolve = resolve
     STATE.promise.reject = reject
 })
 
-export async function init(o: Options): Promise<void> {
-    try {
-        return await _init(o)
-    } catch (error) {
-        STATE.promise.reject(error)
-    }
+export function reset() {
+    STATE.initialized = false
+    STATE.config = {}
+    ready = new Promise((resolve, reject) => {
+        STATE.promise.resolve = resolve
+        STATE.promise.reject = reject
+    })
 }
 
-async function _init(o: Options): Promise<void> {
+export const get = <Config = any>(key: string): Config => {
+    if (!STATE.initialized) {
+        throw new Error('ConfigMan: Not initialised')
+    }
+    const value = key
+        .split('.')
+        .reduce((a, b) => (typeof a === 'object' ? a[b] : undefined), STATE.config)
+
+    if (value === undefined) {
+        throw new Error(`ConfigMan: key '${key}' not found`)
+    }
+
+    return JSON.parse(JSON.stringify(value))
+}
+
+export async function init(o: Options): Promise<void> {
+    return _init({...o, sync: false})
+}
+
+export function initSync(o: Options): void {
+    return _init({...o, sync: true}) as void
+}
+
+function _init(o: Options & {sync: boolean}): Promise<void> | void {
     if (STATE.initialized) {
         throw new Error('ConfigMan: Already initialised')
     } else if (!fs.existsSync(path.join(o.cwd || __dirname, 'config-man.json'))) {
-        throw new Error('CONFIG-MAN: You need to add a config-man.json file to your project root.')
+        throw new Error('ConfigMan: You need to add a config-man.json file to your project root.')
     }
 
     const options: OptionsFinal = {
@@ -122,71 +145,105 @@ async function _init(o: Options): Promise<void> {
         schema: require(path.join(o.cwd || __dirname, 'config-man.json')).schema
     }
 
-    let errors: string[] = []
-    let config: {[key: string]: any} = {}
-    const checkErrors = (dataItem: OptionsConfigItem, dataConfig: {[key: string]: any}) => (
-        a: any[],
-        key: string
-    ) => {
-        if (!options.schema.find((option) => option.key === key)) {
-            if (options.removeUnknown) {
-                const {[key]: _omit, ...rest} = config
-                config = rest
-            } else if (!options.allowUnknown) {
-                return [
-                    ...a,
-                    `(${key}) of type <${realTypeOf(dataConfig[key])}> from (${
-                        dataItem.type
-                    }) is unknown`
-                ]
-            }
-        }
-        return a
+    if (options.sync) {
+        return syncInit(options)
+    } else {
+        return asyncInit(options)
     }
+}
+
+function syncInit(options: OptionsFinal) {
+    let config: {[key: string]: any} = {}
     for (let configItem of options.configs) {
         const typeMethod = getType(configItem.type)
 
-        const result = typeMethod({
+        const newConfig = typeMethod({
             ...configItem,
             sync: options.sync,
             cwd: options.cwd,
             schema: options.schema
         })
-
-        const newConfig = options.sync ? result : await result
-
-        errors = Object.keys(newConfig).reduce(checkErrors(configItem, newConfig), errors)
         config = {
             ...config,
             ...newConfig
         }
     }
 
-    errors = options.schema.reduce((a, option) => {
-        const value = config[option.key]
-        const type = realTypeOf(value)
-        if (option.nullable && value === null) {
-            return a
-        } else if (!option.nullable && value === null) {
-            return [...a, `(${option.key}) is not nullable`]
-        } else if (type !== option.type) {
-            return [...a, `(${option.key}) invalid type. Expected <${option.type}> got <${type}>`]
-        } else if (option.allowed && !option.allowed.includes(value)) {
-            return [
-                ...a,
-                `(${option.key}) value not allowed. Expected one of [${option.allowed.join(
-                    ', '
-                )}] got ${value}`
-            ]
-        }
-        return a
-    }, errors)
+    const result = getErrors(options, config)
 
-    if (errors.length) {
-        throw new Error(`ConfigMan: invalid config\n${errors.join('\n')}`)
+    if (result.errors.length) {
+        throw new Error(`ConfigMan: invalid config\n${result.errors.join('\n')}`)
     }
 
-    STATE.config = unflatten(config)
+    STATE.config = unflatten(result.config)
     STATE.initialized = true
     STATE.promise.resolve(true)
+    return
+}
+
+async function asyncInit(options: OptionsFinal) {
+    let config: {[key: string]: any} = {}
+    for (let configItem of options.configs) {
+        const typeMethod = getType(configItem.type)
+        const newConfig = await typeMethod({
+            ...configItem,
+            sync: options.sync,
+            cwd: options.cwd,
+            schema: options.schema
+        })
+        config = {
+            ...config,
+            ...newConfig
+        }
+    }
+
+    const result = getErrors(options, config)
+
+    if (result.errors.length) {
+        throw new Error(`ConfigMan: invalid config\n${result.errors.join('\n')}`)
+    }
+
+    STATE.config = unflatten(result.config)
+    STATE.initialized = true
+    STATE.promise.resolve(true)
+}
+
+function getErrors(
+    options: OptionsFinal,
+    config: {[key: string]: any}
+): {errors: string[]; config: {[key: string]: any}} {
+    let errors: string[] = []
+    let newConfig: {[key: string]: any} = {}
+
+    Object.keys(config).forEach((key: string) => {
+        if (!options.allowUnknown && !options.schema.find((s) => s.key === key)) {
+            errors.push(`(${key}) of type <${realTypeOf(config[key])}> is unknown`)
+        } else if (options.removeUnknown && !options.schema.find((s) => s.key === key)) {
+            // Nothing
+        } else {
+            newConfig[key] = config[key]
+        }
+    })
+
+    options.schema.forEach((schemaItem) => {
+        const value = config[schemaItem.key]
+        const type = realTypeOf(value)
+        if (!schemaItem.nullable && value === null) {
+            errors.push(`(${schemaItem.key}) is not nullable`)
+        } else if (schemaItem.nullable && value === null) {
+            // Nothing
+        } else if (type !== schemaItem.type) {
+            errors.push(
+                `(${schemaItem.key}) invalid type. Expected <${schemaItem.type}> got <${type}>`
+            )
+        } else if (schemaItem.allowed && !schemaItem.allowed.includes(value)) {
+            errors.push(
+                `(${schemaItem.key}) value not allowed. Expected one of [${schemaItem.allowed.join(
+                    ', '
+                )}] got ${value}`
+            )
+        }
+    })
+
+    return {errors, config: newConfig}
 }

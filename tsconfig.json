@@ -3,6 +3,7 @@
         "allowJs": false,
         "checkJs": false,
         "strict": true,
+        "declaration": true,
         "allowSyntheticDefaultImports": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,

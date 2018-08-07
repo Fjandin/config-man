@@ -20,4 +20,20 @@ describe('Config type Json', () => {
             test11: 11
         })
     })
+
+    it('should get config (sync)', async () => {
+        const result = typeJson({
+            sync: true,
+            schema: configManJson.schema,
+            filePath: path.resolve(__dirname, '../../../mock/config.json')
+        })
+        chai.expect(result).to.deep.equal({
+            'test1.test1a': 'test',
+            'test1.test1b': 12345,
+            'test1.test1c': null,
+            test2: '2',
+            test3: 3,
+            test11: 11
+        })
+    })
 })

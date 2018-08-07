@@ -1,7 +1,7 @@
-import AWS from 'aws-sdk'
-import {OptionsConfigItemOptions} from 'index'
+import * as AWS from 'aws-sdk'
+import {OptionsConfigItemOptions} from './../../index'
 
-export default async function getConfigAwsDynamo(
+export default function getConfigAwsDynamo(
     options: OptionsConfigItemOptions
 ): Promise<{[key: string]: any}> {
     if (options.sync) {
@@ -12,14 +12,21 @@ export default async function getConfigAwsDynamo(
 
     AWS.config.update(awsConfig)
     const dynamodb = new AWS.DynamoDB.DocumentClient()
-    const result: AWS.DynamoDB.DocumentClient.ScanOutput = await new Promise((resolve, reject) => {
-        dynamodb.scan(scanParams, (err, data) => {
-            if (err) {
-                return reject(err)
-            }
-            return resolve(data)
-        })
+    const resultPromise: Promise<AWS.DynamoDB.DocumentClient.ScanOutput> = new Promise(
+        (resolve, reject) => {
+            dynamodb.scan(scanParams, (err, data) => {
+                if (err) {
+                    return reject(err)
+                }
+                return resolve(data)
+            })
+        }
+    )
+
+    return resultPromise.then((result) => {
+        const config = result.Items
+            ? result.Items.reduce((a, b) => ({...a, [b.key]: b.value}), {})
+            : {}
+        return config
     })
-    const config = result.Items ? result.Items.reduce((a, b) => ({...a, [b.key]: b.value}), {}) : {}
-    return config
 }

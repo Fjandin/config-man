@@ -14,7 +14,12 @@ describe('Helpers', () => {
             chai.expect(helpers.realTypeOf(null)).to.equal('null')
         })
     })
+
     context('toBoolean', () => {
+        it('should parse boolean (boolean -> boolean)', () => {
+            chai.expect(helpers.toBoolean(false)).to.be.false
+            chai.expect(helpers.toBoolean(true)).to.be.true
+        })
         it('should parse boolean (string -> false)', () => {
             chai.expect(helpers.toBoolean('0')).to.be.false
             chai.expect(helpers.toBoolean('false')).to.be.false
@@ -50,39 +55,8 @@ describe('Helpers', () => {
             chai.expect(helpers.parseValue({type: 'boolean'}, 1)).to.be.true
             chai.expect(helpers.parseValue({type: 'boolean'}, 0)).to.be.false
         })
+        it('should handle null', () => {
+            chai.expect(helpers.parseValue({type: 'string'}, 'null')).to.be.null
+        })
     })
 })
-
-/*
-export function toBoolean(value: any): boolean {
-    if (typeof value === 'number') {
-        return [1, 0].includes(value) ? !!value : false
-    } else if (typeof value === 'string') {
-        return ['true', 'false'].includes(value.toLowerCase()) ? value === 'true' : false
-    } else if (typeof value === 'boolean') {
-        return value
-    }
-    return false
-}
-
-export function parseValue(option: {type: string}, value: any) {
-    switch (option.type) {
-        case 'number':
-            return parseFloat(value) || value
-        case 'boolean':
-            return toBoolean(value) || value
-    }
-    if (value.toString().toLowerCase() === 'null') {
-        return null
-    }
-    return value
-}
-
-export function realTypeOf(obj: any): string {
-    return {}.toString
-        .call(obj)
-        .replace(/\[object\s(.*?)\]/, '$1')
-        .toLowerCase()
-}
-
-*/

@@ -1,6 +1,6 @@
 import * as fs from 'fs'
 import * as flatten from 'flat'
-import {OptionsConfigItemOptions} from 'index'
+import {OptionsConfigItemOptions} from './../../index'
 
 export default function getConfigJson(
     options: OptionsConfigItemOptions
