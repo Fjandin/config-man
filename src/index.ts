@@ -136,13 +136,21 @@ function _init(o: Options & {sync: boolean}): Promise<void> | void {
         throw new Error('ConfigMan: You need to add a config-man.json file to your project root.')
     }
 
+    let schema
+    try {
+        const schemaRaw = fs.readFileSync(path.join(o.cwd || __dirname, 'config-man.json')).toString('utf8')
+        schema = JSON.parse(schemaRaw).schema
+    } catch (error) {
+        throw new Error(`ConfigMan: schema load error: ${error.message}`)
+    }
+
     const options: OptionsFinal = {
         cwd: o.cwd || __dirname,
         sync: !!o.sync,
         allowUnknown: !!o.allowUnknown,
         removeUnknown: !!o.removeUnknown,
         configs: [...(o.configs || [])],
-        schema: require(path.join(o.cwd || __dirname, 'config-man.json')).schema
+        schema
     }
 
     if (options.sync) {
