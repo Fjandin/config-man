@@ -1,13 +1,13 @@
 import {unflatten} from 'flat'
-import * as path from 'path'
 import * as fs from 'fs'
-import {realTypeOf} from './lib/helpers'
+import * as path from 'path'
 
 import typeArg from './lib/config/arg'
 import typeDefault from './lib/config/default'
 import typeDynamodb from './lib/config/dynamodb'
 import typeEnv from './lib/config/env'
 import typeJson from './lib/config/json'
+import {realTypeOf} from './lib/helpers'
 
 export interface SchemaItem<Type = any> {
     key: string
@@ -112,7 +112,7 @@ export const get = <Config = any>(key: string): Config => {
     }
     const value = key
         .split('.')
-        .reduce((a, b) => (typeof a === 'object' ? a[b] : undefined), STATE.config)
+        .reduce((a, b) => ((typeof a as any) === 'object' ? a[b] : undefined), STATE.config)
 
     if (value === undefined) {
         throw new Error(`ConfigMan: key '${key}' not found`)
@@ -138,7 +138,9 @@ function _init(o: Options & {sync: boolean}): Promise<void> | void {
 
     let schema
     try {
-        const schemaRaw = fs.readFileSync(path.join(o.cwd || __dirname, 'config-man.json')).toString('utf8')
+        const schemaRaw = fs
+            .readFileSync(path.join(o.cwd || __dirname, 'config-man.json'))
+            .toString('utf8')
         schema = JSON.parse(schemaRaw).schema
     } catch (error) {
         throw new Error(`ConfigMan: schema load error: ${error.message}`)

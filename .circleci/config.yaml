@@ -1,0 +1,62 @@
+version: 2.0
+
+jobs:
+  test:
+    working_directory: ~/repo
+    docker:
+      - image: circleci/node:8.11.3
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - yarn-packages-{{ .Branch }}
+            - yarn-packages-master
+            - yarn-packages-
+      - run:
+          name: Install Dependencies
+          command: yarn install
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules/
+      - run: yarn tslint
+      - run: yarn typecheck
+      - run: yarn test
+
+  deploy:
+    working_directory: ~/repo
+    docker:
+      - image: circleci/node:8.11.3
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - yarn-packages-{{ .Branch }}
+            - yarn-packages-master
+            - yarn-packages-
+      - run:
+          name: Install Dependencies
+          command: yarn install
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules/
+      - run:
+          name: Install aws cli
+          command: sudo apt-get -y -qq install awscli
+      - run: yarn build
+      - run: aws s3 cp ./dist s3://www.techcare.fo --region eu-west-1 --recursive --exclude "*.html"
+      - run: aws s3 cp dist/index.html s3://www.techcare.fo --region eu-west-1 --content-type text/html --cache-control max-age=0
+
+workflows:
+  version: 2
+  test-deploy:
+    jobs:
+      - test
+

@@ -1,4 +1,5 @@
 import * as AWS from 'aws-sdk'
+
 import {OptionsConfigItemOptions} from './../../index'
 
 export default function getConfigAwsDynamo(

@@ -1,5 +1,5 @@
-import {parseValue} from './../helpers'
 import {OptionsConfigItemOptions} from './../../index'
+import {parseValue} from './../helpers'
 
 export default function getConfigEnv(
     options: OptionsConfigItemOptions
