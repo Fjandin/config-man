@@ -41,22 +41,24 @@ jobs:
             - yarn-packages-
       - run:
           name: Install Dependencies
-          command: yarn install
+          command: yarn
       - save_cache:
           name: Save Yarn Package Cache
           key: yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
           paths:
             - node_modules/
-      - run:
-          name: Install aws cli
-          command: sudo apt-get -y -qq install awscli
       - run: yarn build
-      - run: aws s3 cp ./dist s3://www.techcare.fo --region eu-west-1 --recursive --exclude "*.html"
-      - run: aws s3 cp dist/index.html s3://www.techcare.fo --region eu-west-1 --content-type text/html --cache-control max-age=0
+      - run: ( cd dist; npm publish )
 
 workflows:
   version: 2
   test-deploy:
     jobs:
       - test
+      - deploy:
+          requires:
+            - test
+          filters:
+            branches:
+              only: master
 
