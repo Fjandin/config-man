@@ -1,38 +1,39 @@
 # NodeJS configuration manager
 
 ## Install
+
 `yarn add @fjandin/config-man`
 
 ## Initialize
 
 [ProjectRoot]/config-man.json
-````json
-{
-    "schema": [
-        {"key": "server.port", "type": "number", "default": 8080, "nullable": false}
-    ]
-}
-````
 
-````js
-const configMan = require('@fjandin/config-man')
+```json
+{
+    "schema": [{"key": "server.port", "type": "number", "default": 8080, "nullable": false}]
+}
+```
+
+```ts
+import * as configMan from '@fjandin/config-man'
+
 configMan.init({
     cwd: __dirname,
     removeUnknown: true,
     configs: [
-        {type: 'default'},
-        {type: 'awsDynamodb', tableName: 'Configuration-Table', region: 'eu-west-1'},
-        {type: 'json', path: 'config.json'},
-        {type: 'arg'},
-        {type: 'env'}
+        {type: configMan.ConfigType.DEFAULT},
+        {type: configMan.ConfigType.DYNAMODB, tableName: 'Configuration-Table', region: 'eu-west-1'},
+        {type: configMan.ConfigType.JSON, filepath: path.resolve('config.json')},
+        {type: configMan.ConfigType.ARG, prefix: 'CM_'},
+        {type: configMan.ConfigType.ENV, prefix: 'CM_}
     ]
 });
 
 async function startApp() {
     // Wait for config to be ready
     await configMan.ready;
-    
+
     const port = configMan.get('server.port');
     // etc...
 }
-````
+```
