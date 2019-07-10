@@ -1,5 +1,5 @@
-import typeDynamodb from 'lib/config/dynamodb'
 import * as chai from 'chai'
+import typeDynamodb from 'lib/config/dynamodb'
 
 const configManJson = require('configManJson')
 

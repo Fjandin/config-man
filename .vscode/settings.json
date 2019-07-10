@@ -1,7 +1,11 @@
 {
     "editor.formatOnSave": true,
+    "eslint.enable": true,
     "eslint.autoFixOnSave": false,
-    "tslint.autoFixOnSave": true,
-    "tslint.enable": true,
+    "tslint.jsEnable": false,
+    "prettier.tslintIntegration": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.tslint": true
+    },
     "typescript.tsdk": "node_modules/typescript/lib"
 }

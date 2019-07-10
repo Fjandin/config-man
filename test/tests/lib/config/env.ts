@@ -1,5 +1,5 @@
-import typeEnv from 'lib/config/env'
 import * as chai from 'chai'
+import typeEnv from 'lib/config/env'
 
 const configManJson = require('configManJson')
 

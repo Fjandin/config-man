@@ -1,6 +1,6 @@
-import * as path from 'path'
-import typeJson from 'lib/config/json'
 import * as chai from 'chai'
+import typeJson from 'lib/config/json'
+import * as path from 'path'
 
 const configManJson = require('configManJson')
 

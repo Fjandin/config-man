@@ -1,5 +1,5 @@
-import typeArg from 'lib/config/arg'
 import * as chai from 'chai'
+import typeArg from 'lib/config/arg'
 
 const configManJson = require('configManJson')
 

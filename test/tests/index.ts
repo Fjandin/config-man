@@ -1,6 +1,6 @@
+import * as chai from 'chai'
 import * as configMan from 'index'
 import * as path from 'path'
-import * as chai from 'chai'
 
 describe('Init', () => {
     beforeEach(() => {

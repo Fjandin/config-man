@@ -112,7 +112,7 @@ export const get = <Config = any>(key: string): Config => {
     }
     const value = key
         .split('.')
-        .reduce((a, b) => ((typeof a as any) === 'object' ? a[b] : undefined), STATE.config)
+        .reduce<any>((a, b) => (typeof a === 'object' ? a[b] : undefined), STATE.config)
 
     if (value === undefined) {
         throw new Error(`ConfigMan: key '${key}' not found`)

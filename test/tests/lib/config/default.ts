@@ -1,5 +1,5 @@
-import typeDefault from 'lib/config/default'
 import * as chai from 'chai'
+import typeDefault from 'lib/config/default'
 
 const configManJson = require('configManJson')
 

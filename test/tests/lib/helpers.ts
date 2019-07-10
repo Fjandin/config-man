@@ -1,5 +1,5 @@
-import * as helpers from 'lib/helpers'
 import * as chai from 'chai'
+import * as helpers from 'lib/helpers'
 
 describe('Helpers', () => {
     context('realTypeOf', () => {
