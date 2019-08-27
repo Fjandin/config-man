@@ -13,8 +13,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - secrets: ["NPM_TOKEN"]
     - name: Use Node.js ${{ matrix.node-version }}
+      secrets: ["NPM_TOKEN"]
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
