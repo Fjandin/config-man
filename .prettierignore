@@ -1,2 +1,3 @@
 .circleci/
 package.json
+.github/

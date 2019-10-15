@@ -25,7 +25,7 @@
     "typecheck": "tsc --noEmit",
     "test": "CM_test1_test1a=env CM_env_unknown=test nyc mocha --opts ./test/mocha.opts -r ts-node/register",
     "test:watch": "nyc mocha --opts ./test/mocha-w.opts -r ts-node/register",
-    "build": "rm -rf dist; tsc; cp package.json ./dist; cp .npmrc ./dist"
+    "build": "rm -rf dist; tsc; cp package.json ./dist"
   },
   "dependencies": {
     "flat": "4.1.0"

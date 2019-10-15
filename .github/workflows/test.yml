@@ -14,8 +14,8 @@ jobs:
         with:
           node-version: '10.x'
       - run: yarn
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run: yarn test
+      - run: yarn build
+      - run: ( cd dist; npm publish )
         env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
