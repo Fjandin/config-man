@@ -17,3 +17,5 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run: yarn test
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
