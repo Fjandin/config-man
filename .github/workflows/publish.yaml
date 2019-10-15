@@ -1,4 +1,4 @@
-name: Test
+name: Test and publish
 
 on:
   push:
@@ -20,4 +20,4 @@ jobs:
       - run: yarn build
       - run: ( cd dist; npm publish )
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
