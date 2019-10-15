@@ -6,7 +6,7 @@
 
 ## Initialize
 
-[ProjectRoot]/config-man.json
+Add `[ProjectRoot]/config-man.json` file
 
 ```json
 {
