@@ -1,4 +1,4 @@
-# NodeJS configuration manager
+# NodeJS Configuration Manager
 
 ## Install
 
