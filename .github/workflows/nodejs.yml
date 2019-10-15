@@ -1,4 +1,4 @@
-name: Node CI
+name: Test
 
 on:
   push:
@@ -13,7 +13,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '10.x'
+      - run: yarn
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - run: yarn
       - run: yarn test
