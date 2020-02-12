@@ -182,7 +182,7 @@ function syncInit(options: OptionsFinal) {
     const result = getErrors(options, config)
 
     if (result.errors.length) {
-        throw new Error(`ConfigMan: invalid config\n${result.errors.join('\n')}`)
+        throw new Error(`ConfigMan: invalid config: ${result.errors.join('; ')}`)
     }
 
     STATE.config = unflatten(result.config)
@@ -210,7 +210,7 @@ async function asyncInit(options: OptionsFinal) {
     const result = getErrors(options, config)
 
     if (result.errors.length) {
-        throw new Error(`ConfigMan: invalid config\n${result.errors.join('\n')}`)
+        throw new Error(`ConfigMan: invalid config: ${result.errors.join('; ')}`)
     }
 
     STATE.config = unflatten(result.config)
