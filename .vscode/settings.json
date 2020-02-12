@@ -1,9 +1,7 @@
 {
     "editor.formatOnSave": true,
     "eslint.enable": true,
-    "eslint.autoFixOnSave": false,
     "tslint.jsEnable": false,
-    "prettier.tslintIntegration": true,
     "editor.codeActionsOnSave": {
         "source.fixAll.tslint": true
     },

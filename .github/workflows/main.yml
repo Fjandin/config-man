@@ -1,0 +1,31 @@
+name: Config-Man-Workflow
+on:
+    pull_request:
+        branches:
+            - master
+    push:
+        branches:
+            - master
+jobs:
+    check:
+        name: 'Check, Lint, Test and Publish'
+        runs-on: ubuntu-latest
+        env:
+            NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        steps:
+            - uses: actions/checkout@v1
+              with:
+                  fetch-depth: 1
+            - uses: actions/setup-node@v1
+              with:
+                  node-version: 12
+            - run: 'yarn --frozen-lockfile --ignore-engines --ignore-optional --non-interactive --silent --ignore-scripts --production=false'
+            - name: TypeScript Check
+              run: 'yarn typecheck'
+            - name: Tslint/Prettier
+              run: 'yarn tslint'
+            - name: Test
+              run: 'yarn test'
+            - name: 'Publish'
+              if: github.event_name == 'push'
+              run: yarn build && cd dist && npm publish --access restricted
