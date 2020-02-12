@@ -1,6 +1,6 @@
 {
   "name": "@fjandin/config-man",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Config manager",
   "main": "index.js",
   "author": "René Bischoff <rene.bischoff@gmail.com>",
@@ -20,7 +20,7 @@
     ]
   },
   "scripts": {
-    "peer": "yarn add --peer aws-sdk",
+    "peer": "yarn add --peer aws-sdk@2.617.0",
     "lint": "eslint src --ext .ts,.js",
     "lint:fix": "eslint src --ext .ts,.js --fix",
     "typecheck": "tsc --noEmit",
@@ -48,6 +48,6 @@
     "typescript": "3.7.5"
   },
   "peerDependencies": {
-    "aws-sdk": "2.287.0"
+    "aws-sdk": "2.617.0"
   }
 }
