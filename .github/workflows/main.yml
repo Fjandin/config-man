@@ -19,7 +19,7 @@ jobs:
             - uses: actions/setup-node@v1
               with:
                   node-version: 12
-            - run: 'yarn --frozen-lockfile --ignore-engines --ignore-optional --non-interactive --silent --ignore-scripts --production=false'
+            - run: 'yarn --frozen-lockfile --ignore-engines --ignore-optional --non-interactive --silent --ignore-scripts --production=false; yarn peer'
             - name: TypeScript Check
               run: 'yarn typecheck'
             - name: Lint
