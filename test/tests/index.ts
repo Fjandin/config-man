@@ -53,7 +53,7 @@ describe('Init', () => {
                     ]
                 })
                 .should.eventually.be.rejectedWith(
-                    'ConfigMan: invalid config\n(test11) of type <number> is unknown'
+                    'ConfigMan: invalid config: (test11) of type <number> is unknown'
                 )
         })
     })
