@@ -1,23 +1,16 @@
 {
     "compilerOptions": {
         "allowJs": false,
-        "checkJs": false,
         "strict": true,
-        "declaration": true,
         "allowSyntheticDefaultImports": true,
+        "declaration": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
-        "strictNullChecks": true,
         "target": "es2017",
-        "lib": ["es2017", "esnext.asynciterable"],
+        "lib": ["es2017", "dom"],
         "module": "commonjs",
         "outDir": "dist",
-        "baseUrl": "src",
-        "sourceMap": true,
-        "paths": {
-            "*": ["*"]
-        }
+        "sourceMap": true
     },
-    "exclude": ["dist"],
-    "include": ["./src/**/*.ts"]
+    "include": ["./**/*.ts", "./**/*.js"]
 }

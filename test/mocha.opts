@@ -1,7 +1,0 @@
---recursive
---check-leaks
---exit
---require ./test/setup.js
---cm test3=2
---cm test10=666
-./test/tests/**/*.{js,ts}

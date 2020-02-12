@@ -164,7 +164,7 @@ function _init(o: Options & {sync: boolean}): Promise<void> | void {
 
 function syncInit(options: OptionsFinal) {
     let config: {[key: string]: any} = {}
-    for (let configItem of options.configs) {
+    for (const configItem of options.configs) {
         const typeMethod = getType(configItem.type)
 
         const newConfig = typeMethod({
@@ -193,7 +193,7 @@ function syncInit(options: OptionsFinal) {
 
 async function asyncInit(options: OptionsFinal) {
     let config: {[key: string]: any} = {}
-    for (let configItem of options.configs) {
+    for (const configItem of options.configs) {
         const typeMethod = getType(configItem.type)
         const newConfig = await typeMethod({
             ...configItem,
@@ -222,8 +222,8 @@ function getErrors(
     options: OptionsFinal,
     config: {[key: string]: any}
 ): {errors: string[]; config: {[key: string]: any}} {
-    let errors: string[] = []
-    let newConfig: {[key: string]: any} = {}
+    const errors: string[] = []
+    const newConfig: {[key: string]: any} = {}
 
     Object.keys(config).forEach((key: string) => {
         if (!options.allowUnknown && !options.schema.find((s) => s.key === key)) {

@@ -1,9 +1,9 @@
 {
-    "editor.formatOnSave": true,
+    "editor.formatOnSave": false,
     "eslint.enable": true,
-    "tslint.jsEnable": false,
     "editor.codeActionsOnSave": {
-        "source.fixAll.tslint": true
+        "source.fixAll.tslint": false,
+        "source.fixAll.eslint": true
     },
     "typescript.tsdk": "node_modules/typescript/lib"
 }
