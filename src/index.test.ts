@@ -1,5 +1,4 @@
-import * as chai from 'chai'
-import * as configMan from 'index'
+import * as configMan from './'
 import * as path from 'path'
 
 describe('Init', () => {
@@ -7,25 +6,25 @@ describe('Init', () => {
         configMan.reset()
     })
 
-    context('async', () => {
+    describe('async', () => {
         it('should initialize', async () => {
             const init: any = configMan.init({
-                cwd: path.resolve(__dirname, '../mock'),
+                cwd: path.resolve(__dirname),
                 allowUnknown: true,
                 removeUnknown: true,
                 configs: [
                     {type: configMan.ConfigType.DEFAULT},
                     {
                         type: configMan.ConfigType.JSON,
-                        filePath: path.resolve(__dirname, '../mock/config.json')
+                        filePath: path.resolve(__dirname, 'index.test.json')
                     }
                 ]
             })
-            chai.expect(init.then).to.not.be.undefined
-            chai.expect(configMan.STATE.initialized).to.be.false
+            expect(init.then).not.toBe(undefined)
+            expect(configMan.STATE.initialized).toBe(false)
             await init
-            chai.expect(configMan.STATE.initialized).to.be.true
-            chai.expect(configMan.STATE.config).to.deep.equal({
+            expect(configMan.STATE.initialized).toBe(true)
+            expect(configMan.STATE.config).toEqual({
                 test1: {
                     test1a: 'test',
                     test1b: 12345,
@@ -38,62 +37,63 @@ describe('Init', () => {
         })
     })
 
-    context('check', () => {
+    describe('check', () => {
         it('should fail on unknown', async () => {
-            await configMan
-                .init({
-                    cwd: path.resolve(__dirname, '../mock'),
+            const cm = () =>
+                configMan.init({
+                    cwd: path.resolve(__dirname),
                     allowUnknown: false,
                     configs: [
                         {type: configMan.ConfigType.DEFAULT},
                         {
                             type: configMan.ConfigType.JSON,
-                            filePath: path.resolve(__dirname, '../mock/config.json')
+                            filePath: path.resolve(__dirname, 'index.test.json')
                         }
                     ]
                 })
-                .should.eventually.be.rejectedWith(
-                    'ConfigMan: invalid config: (test11) of type <number> is unknown'
-                )
+            await expect(cm()).rejects.toThrow(
+                'ConfigMan: invalid config: (test11) of type <number> is unknown'
+            )
         })
     })
 
-    context('check 2', () => {
+    describe('check 2', () => {
         it('should fail on no configMan Schema', async () => {
-            await configMan
-                .init({
-                    cwd: path.resolve(__dirname, '../'),
+            const cm = () =>
+                configMan.init({
+                    cwd: path.resolve(__dirname, 'lib'),
                     configs: [
                         {type: configMan.ConfigType.DEFAULT},
                         {
                             type: configMan.ConfigType.JSON,
-                            filePath: path.resolve(__dirname, '../mock/config.json')
+                            filePath: path.resolve(__dirname, 'index.test.json')
                         }
                     ]
                 })
-                .should.eventually.be.rejectedWith(
-                    'ConfigMan: You need to add a config-man.json file to your project root'
-                )
+
+            await expect(cm()).rejects.toThrow(
+                'ConfigMan: You need to add a config-man.json file to your project root'
+            )
         })
     })
 
-    context('sync', () => {
+    describe('sync', () => {
         it('should initialize', async () => {
             const init: any = configMan.initSync({
-                cwd: path.resolve(__dirname, '../mock'),
+                cwd: path.resolve(__dirname),
                 allowUnknown: true,
                 removeUnknown: true,
                 configs: [
                     {type: configMan.ConfigType.DEFAULT},
                     {
                         type: configMan.ConfigType.JSON,
-                        filePath: path.resolve(__dirname, '../mock/config.json')
+                        filePath: path.resolve(__dirname, 'index.test.json')
                     }
                 ]
             })
-            chai.expect(init).to.be.undefined
-            chai.expect(configMan.STATE.initialized).to.be.true
-            chai.expect(configMan.STATE.config).to.deep.equal({
+            expect(init).toBe(undefined)
+            expect(configMan.STATE.initialized).toBe(true)
+            expect(configMan.STATE.config).toEqual({
                 test1: {
                     test1a: 'test',
                     test1b: 12345,

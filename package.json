@@ -21,39 +21,31 @@
   },
   "scripts": {
     "peer": "yarn add --peer aws-sdk",
-    "tslint": "tslint -c tslint.json './src/**/*.ts' --project tsconfig.json",
+    "lint": "eslint src --ext .ts,.js",
+    "lint:fix": "eslint src --ext .ts,.js --fix",
     "typecheck": "tsc --noEmit",
-    "test": "CM_test1_test1a=env CM_env_unknown=test nyc mocha --opts ./test/mocha.opts -r ts-node/register",
-    "test:watch": "nyc mocha --opts ./test/mocha-w.opts -r ts-node/register",
-    "build": "rm -rf dist; tsc; cp package.json ./dist; echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > ./dist/.npmrc"
+    "test": "jest",
+    "build": "rm -rf dist; tsc -p tsconfig.build.json; cp package.json ./dist; echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > ./dist/.npmrc"
   },
   "dependencies": {
-    "flat": "4.1.0"
+    "@types/jest": "^25.1.2",
+    "flat": "5.0.0",
+    "jest": "^25.1.0",
+    "ts-jest": "^25.2.0"
   },
   "devDependencies": {
-    "@types/chai-as-promised": "7.1.0",
-    "@types/chai-datetime": "0.0.32",
     "@types/flat": "0.0.28",
-    "@types/mocha": "5.2.7",
-    "@types/mock-require": "2.0.0",
     "@types/node": "12.6.2",
-    "@types/sinon": "7.0.13",
-    "@types/sinon-chai": "3.2.2",
-    "aws-sdk-mock": "4.5.0",
-    "chai": "4.2.0",
-    "chai-as-promised": "7.1.1",
-    "chai-datetime": "1.5.0",
-    "mocha": "6.1.4",
-    "mock-require": "3.0.3",
-    "nyc": "14.1.1",
-    "prettier": "1.18.2",
-    "sinon": "7.3.2",
-    "sinon-chai": "3.3.0",
-    "ts-node": "8.3.0",
-    "tslint": "5.18.0",
-    "tslint-config-prettier": "1.18.0",
-    "tslint-config-standard": "8.0.1",
-    "typescript": "3.5.3"
+    "@typescript-eslint/eslint-plugin": "2.19.2",
+    "@typescript-eslint/parser": "2.19.2",
+    "eslint": "6.8.0",
+    "eslint-config-prettier": "6.10.0",
+    "eslint-plugin-node": "6.0.1",
+    "eslint-plugin-prettier": "3.1.2",
+    "eslint-plugin-promise": "4.2.1",
+    "eslint-plugin-security": "1.4.0",
+    "prettier": "1.19.1",
+    "typescript": "3.7.5"
   },
   "peerDependencies": {
     "aws-sdk": "2.287.0"

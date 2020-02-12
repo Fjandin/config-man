@@ -1,6 +1,0 @@
---recursive
---check-leaks
---exit
---watch
---require ./test/setup.js
-./test/tests/**/*.{js,ts}
