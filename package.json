@@ -1,6 +1,6 @@
 {
   "name": "@fjandin/config-man",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Config manager",
   "main": "index.js",
   "author": "René Bischoff <rene.bischoff@gmail.com>",
