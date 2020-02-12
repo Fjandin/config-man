@@ -3,22 +3,18 @@
   "version": "1.2.0",
   "description": "Config manager",
   "main": "index.js",
-  "author": "René Bischoff <rene.bischoff@gmail.com>",
+  "author": "René Bischoff <rene.bischoff@gmail.com> (https://github.com/fjandin)",
+  "homepage": "https://github.com/fjandin/config-man",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/fjandin/config-man.git"
+  },
+  "bugs": {
+    "url" : "https://github.com/fjandin/config-man/issues",
+    "email" : "project@hostname.com"
+  },
   "license": "MIT",
   "private": false,
-  "nyc": {
-    "extension": [
-      ".ts"
-    ],
-    "include": [
-      "src/"
-    ],
-    "report-dir": "./coverage",
-    "reporter": [
-      "lcov",
-      "text-summary"
-    ]
-  },
   "scripts": {
     "peer": "yarn add --peer aws-sdk@2.617.0",
     "lint": "eslint src --ext .ts,.js",
