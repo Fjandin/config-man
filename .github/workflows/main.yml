@@ -28,4 +28,4 @@ jobs:
               run: 'yarn test'
             - name: 'Publish'
               if: github.event_name == 'push'
-              run: yarn build && cd dist && npm publish
+              run: yarn build && npm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}" && cd dist && npm publish

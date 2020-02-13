@@ -1,10 +1,11 @@
 {
   "name": "@fjandin/config-man",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Config manager",
   "main": "index.js",
   "author": "René Bischoff <rene.bischoff@gmail.com> (https://github.com/fjandin)",
   "homepage": "https://github.com/fjandin/config-man",
+  "readme": "README.md",
   "repository": {
     "type" : "git",
     "url" : "https://github.com/fjandin/config-man.git"
@@ -21,7 +22,7 @@
     "lint:fix": "eslint src --ext .ts,.js --fix",
     "typecheck": "tsc --noEmit",
     "test": "jest",
-    "build": "rm -rf dist; tsc -p tsconfig.build.json; cp package.json ./dist; echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > ./dist/.npmrc"
+    "build": "rm -rf dist; tsc -p tsconfig.build.json; cp package.json ./dist; cp README.md ./dist; cp LICENSE ./dist; cp SECURITY.md ./dist;"
   },
   "dependencies": {
     "@types/jest": "^25.1.2",
