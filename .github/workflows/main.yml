@@ -28,4 +28,4 @@ jobs:
               run: 'yarn test'
             - name: 'Publish'
               if: github.event_name == 'push'
-              run: yarn build && cd dist && npm publish --access restricted
+              run: yarn build && cd dist && npm publish
