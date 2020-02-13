@@ -1,23 +1,23 @@
 {
   "name": "@fjandin/config-man",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "Config manager",
   "main": "index.js",
   "author": "René Bischoff <rene.bischoff@gmail.com> (https://github.com/fjandin)",
   "homepage": "https://github.com/fjandin/config-man",
   "readme": "README.md",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/fjandin/config-man.git"
+    "type": "git",
+    "url": "https://github.com/fjandin/config-man.git"
   },
   "bugs": {
-    "url" : "https://github.com/fjandin/config-man/issues",
-    "email" : "project@hostname.com"
+    "url": "https://github.com/fjandin/config-man/issues",
+    "email": "project@hostname.com"
   },
   "license": "MIT",
   "private": false,
   "scripts": {
-    "peer": "yarn add --peer aws-sdk@2.617.0",
+    "peer": "yarn add --peer --frozen-lockfile aws-sdk@2.617.0",
     "lint": "eslint src --ext .ts,.js",
     "lint:fix": "eslint src --ext .ts,.js --fix",
     "typecheck": "tsc --noEmit",
@@ -25,13 +25,11 @@
     "build": "rm -rf dist; tsc -p tsconfig.build.json; cp package.json ./dist; cp README.md ./dist; cp LICENSE ./dist; cp SECURITY.md ./dist;"
   },
   "dependencies": {
-    "@types/jest": "^25.1.2",
-    "flat": "5.0.0",
-    "jest": "^25.1.0",
-    "ts-jest": "^25.2.0"
+    "flat": "5.0.0"
   },
   "devDependencies": {
     "@types/flat": "0.0.28",
+    "@types/jest": "^25.1.2",
     "@types/node": "12.6.2",
     "@typescript-eslint/eslint-plugin": "2.19.2",
     "@typescript-eslint/parser": "2.19.2",
@@ -41,7 +39,9 @@
     "eslint-plugin-prettier": "3.1.2",
     "eslint-plugin-promise": "4.2.1",
     "eslint-plugin-security": "1.4.0",
+    "jest": "^25.1.0",
     "prettier": "1.19.1",
+    "ts-jest": "^25.2.0",
     "typescript": "3.7.5"
   },
   "peerDependencies": {
