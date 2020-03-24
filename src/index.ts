@@ -7,6 +7,7 @@ import typeDefault from './lib/config/default'
 import typeDynamodb from './lib/config/dynamodb'
 import typeEnv from './lib/config/env'
 import typeJson from './lib/config/json'
+import typeSecretManager from './lib/config/secret-manager'
 import {realTypeOf} from './lib/helpers'
 
 export interface SchemaItem<Type = any> {
@@ -22,7 +23,8 @@ export enum ConfigType {
     DYNAMODB = 'aws-dynamodb',
     DEFAULT = 'default',
     ENV = 'env',
-    JSON = 'json'
+    JSON = 'json',
+    SECRET_MANAGER = 'secret-manager'
 }
 
 export type ConfigTypeMethod = (
@@ -69,6 +71,8 @@ function getType(type: ConfigType): ConfigTypeMethod {
             return typeEnv
         case ConfigType.JSON:
             return typeJson
+        case ConfigType.SECRET_MANAGER:
+            return typeSecretManager
         default:
             throw new Error(`ConfigMan: Unknown config type '${type}'`)
     }
