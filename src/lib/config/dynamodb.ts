@@ -8,7 +8,7 @@ export default function getConfigAwsDynamo(
     if (options.sync) {
         throw new Error('This type does not support sync')
     }
-    const scanParams = {TableName: options.tableName}
+    const scanParams = {TableName: options.tableName, ConsistentRead: true}
     const awsConfig = {region: options.region}
 
     AWS.config.update(awsConfig)
