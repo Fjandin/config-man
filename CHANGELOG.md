@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.3.2]
+### Changed
+ - Upgrade flat package to latest (patch)
+
 ## [1.3.1]
 ### Added
 use `ConsistentRead: true` for Dynamo DB scanning params
