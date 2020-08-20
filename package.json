@@ -33,6 +33,7 @@
     "@types/node": "^12.6.2",
     "@typescript-eslint/eslint-plugin": "^2.19.2",
     "@typescript-eslint/parser": "^2.19.2",
+    "aws-sdk": "^2.737.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-node": "^11.0.0",
@@ -44,7 +45,5 @@
     "ts-jest": "^25.2.0",
     "typescript": "^3.7.5"
   },
-  "peerDependencies": {
-    "aws-sdk": "^2.644.0"
-  }
+  "peerDependencies": {}
 }
