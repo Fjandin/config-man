@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.3.3]
+### Changed
+ - Upgrade flat dependency to 5.0.2
+
 ## [1.3.2]
 ### Changed
  - Upgrade flat package to latest (patch)
