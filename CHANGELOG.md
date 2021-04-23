@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.4.0]
+
+### Added
+
+- Added new configuration type: Javascript.
+
 ## [1.3.3]
 ### Changed
  - Upgrade flat package to latest (patch)
