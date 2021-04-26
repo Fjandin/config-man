@@ -23,7 +23,7 @@ configMan.init({
     configs: [
         {type: configMan.ConfigType.DEFAULT},
         {type: configMan.ConfigType.DYNAMODB, tableName: 'Configuration-Table', region: 'eu-west-1'},
-        {type: configMan.ConfigType.JSON, filepath: path.resolve('config.json')},
+        {type: configMan.ConfigType.JSON, filePath: path.resolve('config.json')},
         {type: configMan.ConfigType.ARG, prefix: 'CM_'},
         {type: configMan.ConfigType.ENV, prefix: 'CM_}
     ]
