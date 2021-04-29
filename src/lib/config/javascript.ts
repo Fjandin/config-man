@@ -2,7 +2,7 @@ import * as flatten from 'flat'
 
 import {OptionsConfigItemOptions} from './../../index'
 
-export default async function getConfigJson(
+export default async function getConfigJavascript(
     options: OptionsConfigItemOptions
 ): Promise<{[key: string]: any}> {
     if (options.sync) {
