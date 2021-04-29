@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.4.1]
+### Changed
+ - Update yarn.lock to fix vunerabilities
+
 ## [1.4.0]
 ### Changed
  - Upgrade peer dependency `aws-sdk`
