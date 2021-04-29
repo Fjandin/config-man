@@ -17,12 +17,12 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "peer": "yarn add --peer --frozen-lockfile aws-sdk@2.617.0",
+    "peer": "yarn add --peer --frozen-lockfile aws-sdk@^2.895.0",
     "lint": "eslint src --ext .ts,.js",
     "lint:fix": "eslint src --ext .ts,.js --fix",
     "typecheck": "tsc --noEmit",
     "test": "jest",
-    "build": "rm -rf dist; tsc -p tsconfig.build.json; cp package.json ./dist; cp README.md ./dist; cp LICENSE ./dist; cp SECURITY.md ./dist;"
+    "build": "rm -rf dist; tsc -p tsconfig.build.json; cp package.json ./dist; cp README.md ./dist; cp LICENSE ./dist; cp SECURITY.md ./dist; cp .npmrc ./dist"
   },
   "dependencies": {
     "flat": "^5.0.2"
