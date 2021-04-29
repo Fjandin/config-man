@@ -2,7 +2,6 @@
 
 ## [1.4.0]
 ### Changed
- - Move to github package registry
  - Upgrade peer dependency `aws-sdk`
 
 ## [1.3.4]
