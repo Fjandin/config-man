@@ -101,7 +101,7 @@ export let ready = new Promise((resolve, reject) => {
     STATE.promise.reject = reject
 })
 
-export function reset() {
+export function reset(): void {
     STATE.initialized = false
     STATE.config = {}
     ready = new Promise((resolve, reject) => {

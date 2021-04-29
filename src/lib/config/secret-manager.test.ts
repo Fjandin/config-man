@@ -11,7 +11,7 @@ const configManJson = {
 
 const mockGetSecretValue = jest.fn()
 const mockConfigUpdate = jest.fn()
-const mockAWS = {
+const mockAws = {
     config: {
         update: mockConfigUpdate
     },
@@ -20,7 +20,7 @@ const mockAWS = {
     }
 }
 
-jest.mock('aws-sdk', () => mockAWS)
+jest.mock('aws-sdk', () => mockAws)
 
 import typeSecretManager from './secret-manager'
 

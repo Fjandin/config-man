@@ -14,13 +14,13 @@ const awsSdk = {
         update: () => null
     },
     DynamoDB: {
-        DocumentClient
+        DocumentClient: documentClient
     }
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
-function DocumentClient() {}
-DocumentClient.prototype.scan = (_params: any, callback: any) => {
+function documentClient() {}
+documentClient.prototype.scan = (_params: any, callback: any) => {
     callback(null, {
         Items: [
             {key: 'test3', value: 2},

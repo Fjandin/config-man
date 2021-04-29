@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.4.0]
+### Changed
+ - Move to github package registry
+ - Upgrade peer dependency `aws-sdk`
+
 ## [1.3.4]
 ### Changed
  - fix misprint in README for JSON config
