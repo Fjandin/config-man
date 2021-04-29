@@ -1,11 +1,11 @@
-export function realTypeOf(obj: any): string {
+export function realTypeOf(obj: unknown): string {
     return {}.toString
         .call(obj)
         .replace(/\[object\s(.*?)\]/, '$1')
         .toLowerCase()
 }
 
-export function toBoolean(value: any): boolean {
+export function toBoolean(value: unknown): boolean {
     if (typeof value === 'number') {
         return [1, 0].includes(value) ? !!value : false
     } else if (typeof value === 'string') {
@@ -16,7 +16,8 @@ export function toBoolean(value: any): boolean {
     return false
 }
 
-export function parseValue(option: {type: string}, value: any) {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export function parseValue(option: {type: string}, value: any): any {
     switch (option.type) {
         case 'number':
             return parseFloat(value)

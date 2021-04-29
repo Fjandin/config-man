@@ -3,7 +3,7 @@ import * as AWS from 'aws-sdk'
 import {OptionsConfigItemOptions} from './../../index'
 
 export default function getConfigAwsDynamo(
-    options: OptionsConfigItemOptions
+    options: OptionsConfigItemOptions,
 ): Promise<{[key: string]: any}> {
     if (options.sync) {
         throw new Error('This type does not support sync')
@@ -21,7 +21,7 @@ export default function getConfigAwsDynamo(
                 }
                 return resolve(data)
             })
-        }
+        },
     )
 
     return resultPromise.then((result) => {
