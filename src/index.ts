@@ -6,6 +6,7 @@ import typeArg from './lib/config/arg'
 import typeDefault from './lib/config/default'
 import typeDynamodb from './lib/config/dynamodb'
 import typeEnv from './lib/config/env'
+import typeJavascript from './lib/config/javascript'
 import typeJson from './lib/config/json'
 import typeSecretManager from './lib/config/secret-manager'
 import {realTypeOf} from './lib/helpers'
@@ -23,6 +24,7 @@ export enum ConfigType {
     DYNAMODB = 'aws-dynamodb',
     DEFAULT = 'default',
     ENV = 'env',
+    JAVASCRIPT = 'javascript',
     JSON = 'json',
     SECRET_MANAGER = 'secret-manager',
 }
@@ -59,23 +61,23 @@ interface OptionsFinal {
     schema: SchemaItem[]
 }
 
+const CONFIG_TYPE_METHODS: Record<ConfigType, ConfigTypeMethod> = {
+    [ConfigType.ARG]: typeArg,
+    [ConfigType.DEFAULT]: typeDefault,
+    [ConfigType.DYNAMODB]: typeDynamodb,
+    [ConfigType.ENV]: typeEnv,
+    [ConfigType.JAVASCRIPT]: typeJavascript,
+    [ConfigType.JSON]: typeJson,
+    [ConfigType.SECRET_MANAGER]: typeSecretManager,
+}
+
 function getType(type: ConfigType): ConfigTypeMethod {
-    switch (type) {
-        case ConfigType.ARG:
-            return typeArg
-        case ConfigType.DEFAULT:
-            return typeDefault
-        case ConfigType.DYNAMODB:
-            return typeDynamodb
-        case ConfigType.ENV:
-            return typeEnv
-        case ConfigType.JSON:
-            return typeJson
-        case ConfigType.SECRET_MANAGER:
-            return typeSecretManager
-        default:
-            throw new Error(`ConfigMan: Unknown config type '${type}'`)
+    const method = CONFIG_TYPE_METHODS[type]
+    if (!method) {
+        throw new Error(`ConfigMan: Unknown config type '${type}'`)
     }
+
+    return method
 }
 
 interface State {

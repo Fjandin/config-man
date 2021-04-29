@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.5.0]
+### Added
+- Added new configuration type: Javascript.
+
 ## [1.4.1]
 ### Changed
  - Update yarn.lock to fix vunerabilities
@@ -25,7 +29,5 @@
 use `ConsistentRead: true` for Dynamo DB scanning params
 
 ## [1.3.0]
-
 ### Added
-
 - Added support for AWS Secret Manager
