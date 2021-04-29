@@ -5,27 +5,27 @@ const configManJson = {
         {key: 'test1.test1c', type: 'string', nullable: true},
         {key: 'test2', type: 'string', allowed: ['1', '2', '3']},
         {key: 'test3', type: 'number', default: 1, allowed: [1, 2, 3]},
-        {key: 'test4', type: 'boolean', default: false}
-    ]
+        {key: 'test4', type: 'boolean', default: false},
+    ],
 }
 
 const awsSdk = {
     config: {
-        update: () => null
+        update: () => null,
     },
     DynamoDB: {
-        DocumentClient
-    }
+        DocumentClient: documentClient,
+    },
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
-function DocumentClient() {}
-DocumentClient.prototype.scan = (_params: any, callback: any) => {
+function documentClient() {}
+documentClient.prototype.scan = (_params: any, callback: any) => {
     callback(null, {
         Items: [
             {key: 'test3', value: 2},
-            {key: 'db.unknown', value: 'dynamo'}
-        ]
+            {key: 'db.unknown', value: 'dynamo'},
+        ],
     })
 }
 
@@ -43,7 +43,7 @@ describe('Config type dynamo db', () => {
             sync: false,
             schema: configManJson.schema,
             tableName: 'Test',
-            region: 'eu-west-1'
+            region: 'eu-west-1',
         })
         expect(result).toEqual({test3: 2, 'db.unknown': 'dynamo'})
     })
@@ -54,7 +54,7 @@ describe('Config type dynamo db', () => {
                 sync: true,
                 schema: configManJson.schema,
                 tableName: 'Test',
-                region: 'eu-west-1'
+                region: 'eu-west-1',
             })
         expect(result).toThrow('This type does not support sync')
     })

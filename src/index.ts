@@ -26,11 +26,11 @@ export enum ConfigType {
     ENV = 'env',
     JAVASCRIPT = 'javascript',
     JSON = 'json',
-    SECRET_MANAGER = 'secret-manager'
+    SECRET_MANAGER = 'secret-manager',
 }
 
 export type ConfigTypeMethod = (
-    options: OptionsConfigItemOptions
+    options: OptionsConfigItemOptions,
 ) => Promise<{[key: string]: any}> | {[key: string]: any}
 
 export interface OptionsConfigItemOptions {
@@ -93,9 +93,9 @@ export const STATE: State = {
     initialized: false,
     promise: {
         resolve: () => true,
-        reject: () => false
+        reject: () => false,
     },
-    config: {}
+    config: {},
 }
 
 export let ready = new Promise((resolve, reject) => {
@@ -103,7 +103,7 @@ export let ready = new Promise((resolve, reject) => {
     STATE.promise.reject = reject
 })
 
-export function reset() {
+export function reset(): void {
     STATE.initialized = false
     STATE.config = {}
     ready = new Promise((resolve, reject) => {
@@ -158,7 +158,7 @@ function _init(o: Options & {sync: boolean}): Promise<void> | void {
         allowUnknown: !!o.allowUnknown,
         removeUnknown: !!o.removeUnknown,
         configs: [...(o.configs || [])],
-        schema
+        schema,
     }
 
     if (options.sync) {
@@ -177,11 +177,11 @@ function syncInit(options: OptionsFinal) {
             ...configItem,
             sync: options.sync,
             cwd: options.cwd,
-            schema: options.schema
+            schema: options.schema,
         })
         config = {
             ...config,
-            ...newConfig
+            ...newConfig,
         }
     }
 
@@ -205,11 +205,11 @@ async function asyncInit(options: OptionsFinal) {
             ...configItem,
             sync: options.sync,
             cwd: options.cwd,
-            schema: options.schema
+            schema: options.schema,
         })
         config = {
             ...config,
-            ...newConfig
+            ...newConfig,
         }
     }
 
@@ -226,7 +226,7 @@ async function asyncInit(options: OptionsFinal) {
 
 function getErrors(
     options: OptionsFinal,
-    config: {[key: string]: any}
+    config: {[key: string]: any},
 ): {errors: string[]; config: {[key: string]: any}} {
     const errors: string[] = []
     const newConfig: {[key: string]: any} = {}
@@ -250,13 +250,13 @@ function getErrors(
             // Nothing
         } else if (type !== schemaItem.type) {
             errors.push(
-                `(${schemaItem.key}) invalid type. Expected <${schemaItem.type}> got <${type}>`
+                `(${schemaItem.key}) invalid type. Expected <${schemaItem.type}> got <${type}>`,
             )
         } else if (schemaItem.allowed && !schemaItem.allowed.includes(value)) {
             errors.push(
                 `(${schemaItem.key}) value not allowed. Expected one of [${schemaItem.allowed.join(
-                    ', '
-                )}] got ${value}`
+                    ', ',
+                )}] got ${value}`,
             )
         }
     })

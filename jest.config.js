@@ -2,7 +2,6 @@ module.exports = {
     rootDir: __dirname,
     verbose: false,
     silent: false,
-    browser: false,
     testEnvironment: 'node',
     collectCoverage: true,
     coverageReporters: ['text-summary', 'lcov'],

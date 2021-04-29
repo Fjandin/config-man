@@ -13,7 +13,7 @@ module.exports = {
         'plugin:@typescript-eslint/eslint-recommended',
         'plugin:@typescript-eslint/recommended',
         'plugin:promise/recommended',
-        'prettier/@typescript-eslint'
+        'prettier'
     ],
     plugins: ['@typescript-eslint', 'prettier', 'promise'],
     rules: {
@@ -25,12 +25,18 @@ module.exports = {
         '@typescript-eslint/no-explicit-any': [0],
         '@typescript-eslint/no-namespace': [0],
         '@typescript-eslint/explicit-function-return-type': [0],
-        '@typescript-eslint/ban-ts-ignore': [2],
+        '@typescript-eslint/ban-ts-comment': [2],
         '@typescript-eslint/no-floating-promises': [2],
-        '@typescript-eslint/camelcase': [
+        '@typescript-eslint/naming-convention': [
             2,
             {
-                properties: 'never'
+                selector: 'variableLike',
+                leadingUnderscore: 'allow',
+                format: ['strictCamelCase']
+            },
+            {
+                selector: 'variable',
+                format: ['strictCamelCase', 'UPPER_CASE']
             }
         ],
         '@typescript-eslint/member-delimiter-style': [
