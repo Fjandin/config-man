@@ -1,7 +1,7 @@
 import {OptionsConfigItemOptions} from './../../index'
 
 export default function getConfigDefault(
-    options: OptionsConfigItemOptions
+    options: OptionsConfigItemOptions,
 ): Promise<{[key: string]: any}> | {[key: string]: any} {
     const schema = options.schema
     const result = schema.reduce((a, option) => {

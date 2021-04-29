@@ -16,9 +16,9 @@ describe('Init', () => {
                     {type: configMan.ConfigType.DEFAULT},
                     {
                         type: configMan.ConfigType.JSON,
-                        filePath: path.resolve(__dirname, 'index.test.json')
-                    }
-                ]
+                        filePath: path.resolve(__dirname, 'index.test.json'),
+                    },
+                ],
             })
             expect(init.then).not.toBe(undefined)
             expect(configMan.STATE.initialized).toBe(false)
@@ -28,11 +28,11 @@ describe('Init', () => {
                 test1: {
                     test1a: 'test',
                     test1b: 12345,
-                    test1c: null
+                    test1c: null,
                 },
                 test2: '2',
                 test3: 3,
-                test4: false
+                test4: false,
             })
         })
     })
@@ -47,12 +47,12 @@ describe('Init', () => {
                         {type: configMan.ConfigType.DEFAULT},
                         {
                             type: configMan.ConfigType.JSON,
-                            filePath: path.resolve(__dirname, 'index.test.json')
-                        }
-                    ]
+                            filePath: path.resolve(__dirname, 'index.test.json'),
+                        },
+                    ],
                 })
             await expect(cm()).rejects.toThrow(
-                'ConfigMan: invalid config: (test11) of type <number> is unknown'
+                'ConfigMan: invalid config: (test11) of type <number> is unknown',
             )
         })
     })
@@ -66,13 +66,13 @@ describe('Init', () => {
                         {type: configMan.ConfigType.DEFAULT},
                         {
                             type: configMan.ConfigType.JSON,
-                            filePath: path.resolve(__dirname, 'index.test.json')
-                        }
-                    ]
+                            filePath: path.resolve(__dirname, 'index.test.json'),
+                        },
+                    ],
                 })
 
             await expect(cm()).rejects.toThrow(
-                'ConfigMan: You need to add a config-man.json file to your project root'
+                'ConfigMan: You need to add a config-man.json file to your project root',
             )
         })
     })
@@ -87,9 +87,9 @@ describe('Init', () => {
                     {type: configMan.ConfigType.DEFAULT},
                     {
                         type: configMan.ConfigType.JSON,
-                        filePath: path.resolve(__dirname, 'index.test.json')
-                    }
-                ]
+                        filePath: path.resolve(__dirname, 'index.test.json'),
+                    },
+                ],
             })
             expect(init).toBe(undefined)
             expect(configMan.STATE.initialized).toBe(true)
@@ -97,11 +97,11 @@ describe('Init', () => {
                 test1: {
                     test1a: 'test',
                     test1b: 12345,
-                    test1c: null
+                    test1c: null,
                 },
                 test2: '2',
                 test3: 3,
-                test4: false
+                test4: false,
             })
         })
     })
