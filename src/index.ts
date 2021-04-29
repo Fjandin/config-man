@@ -68,7 +68,7 @@ const CONFIG_TYPE_METHODS: Record<ConfigType, ConfigTypeMethod> = {
     [ConfigType.ENV]: typeEnv,
     [ConfigType.JAVASCRIPT]: typeJavascript,
     [ConfigType.JSON]: typeJson,
-    [ConfigType.SECRET_MANAGER]: typeSecretManager
+    [ConfigType.SECRET_MANAGER]: typeSecretManager,
 }
 
 function getType(type: ConfigType): ConfigTypeMethod {

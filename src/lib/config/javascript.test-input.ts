@@ -2,9 +2,9 @@ module.exports = {
     test1: {
         test1a: 'test',
         test1b: 12345,
-        test1c: null
+        test1c: null,
     },
     test2: '2',
     test3: 3,
-    test11: 11
+    test11: 11,
 }
