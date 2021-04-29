@@ -26,7 +26,7 @@ configMan.init({
         {type: configMan.ConfigType.JAVASCRIPT, filepath: path.resolve('config.js')},
         {type: configMan.ConfigType.JSON, filepath: path.resolve('config.json')},
         {type: configMan.ConfigType.ARG, prefix: 'CM_'},
-        {type: configMan.ConfigType.ENV, prefix: 'CM_}
+        {type: configMan.ConfigType.ENV, prefix: 'CM_},
     ]
 });
 

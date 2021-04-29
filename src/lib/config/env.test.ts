@@ -7,8 +7,8 @@ const configManJson = {
         {key: 'test1.test1c', type: 'string', nullable: true},
         {key: 'test2', type: 'string', allowed: ['1', '2', '3']},
         {key: 'test3', type: 'number', default: 1, allowed: [1, 2, 3]},
-        {key: 'test4', type: 'boolean', default: false}
-    ]
+        {key: 'test4', type: 'boolean', default: false},
+    ],
 }
 
 describe('Config type evnironment vars', () => {

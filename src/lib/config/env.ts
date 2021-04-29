@@ -2,7 +2,7 @@ import {OptionsConfigItemOptions} from './../../index'
 import {parseValue} from './../helpers'
 
 export default function getConfigEnv(
-    options: OptionsConfigItemOptions
+    options: OptionsConfigItemOptions,
 ): Promise<{[key: string]: any}> | {[key: string]: any} {
     const schema = options.schema
     const prefix = options.prefix || 'CM_'
@@ -23,7 +23,7 @@ export default function getConfigEnv(
         if (args[schemaItem.key]) {
             return {
                 ...a,
-                [schemaItem.key]: parseValue(schemaItem, args[schemaItem.key])
+                [schemaItem.key]: parseValue(schemaItem, args[schemaItem.key]),
             }
         }
         return a

@@ -2,7 +2,7 @@ import {OptionsConfigItemOptions} from './../../index'
 import {parseValue} from './../helpers'
 
 export default function getConfigArg(
-    options: OptionsConfigItemOptions
+    options: OptionsConfigItemOptions,
 ): Promise<{[key: string]: any}> | {[key: string]: any} {
     const prefix = options.prefix || 'cm'
     const schema = options.schema
@@ -20,7 +20,7 @@ export default function getConfigArg(
         if (args[schemaItem.key]) {
             return {
                 ...a,
-                [schemaItem.key]: parseValue(schemaItem, args[schemaItem.key])
+                [schemaItem.key]: parseValue(schemaItem, args[schemaItem.key]),
             }
         }
         return a
