@@ -4,9 +4,12 @@
 ### Added
 - Added new configuration type: Javascript.
 
+## [1.4.1]
+### Changed
+ - Update yarn.lock to fix vunerabilities
+
 ## [1.4.0]
 ### Changed
- - Move to github package registry
  - Upgrade peer dependency `aws-sdk`
 
 ## [1.3.4]
