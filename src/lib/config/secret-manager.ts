@@ -1,5 +1,7 @@
 import * as AWS from 'aws-sdk'
 
+import {parseValue} from './../helpers'
+
 import {OptionsConfigItemOptions} from './../../index'
 
 export default function getConfigAwsDynamo(
@@ -9,6 +11,7 @@ export default function getConfigAwsDynamo(
         throw new Error('This type does not support sync')
     }
 
+    const schema = options.schema
     const params = {SecretId: options.secretName}
     const awsConfig = {region: options.region}
 
@@ -32,7 +35,16 @@ export default function getConfigAwsDynamo(
             }
             try {
                 const secretObj = JSON.parse(secret)
-                return resolve(secretObj)
+                const result = schema.reduce((a: {[key: string]: any}, schemaItem) => {
+                    if (secretObj[schemaItem.key]) {
+                        return {
+                            ...a,
+                            [schemaItem.key]: parseValue(schemaItem, secretObj[schemaItem.key]),
+                        }
+                    }
+                    return a
+                }, secretObj)
+                return resolve(result)
             } catch (e) {
                 return reject(e)
             }

@@ -29,6 +29,25 @@ describe('Config type secret manager', () => {
         jest.clearAllMocks()
     })
 
+    it('should get config (boolean and number)', async () => {
+        mockGetSecretValue.mockImplementation((_params: any, callback: any) =>
+            callback(null, {
+                SecretString: JSON.stringify({
+                    test4: 'true',
+                    test3: '1234',
+                    unknown: 'false',
+                }),
+            }),
+        )
+        const result = await typeSecretManager({
+            sync: false,
+            schema: configManJson.schema,
+            secretName: 'Test',
+            region: 'eu-west-1',
+        })
+        expect(result).toEqual({test4: true, test3: 1234, unknown: 'false'})
+    })
+
     it('should get config (text)', async () => {
         mockGetSecretValue.mockImplementation((_params: any, callback: any) =>
             callback(null, {
