@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.5.1]
+### Fix
+- Was not parsing booleans and number from secret manager
+
 ## [1.5.0]
 ### Added
 - Added new configuration type: Javascript.
