@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.6.0]
+
+### Added
+- Support for [JSON5](https://json5.org/) configuration file format, which allows for comments and in general more flexible, human-friendly syntax.
+
 ## [1.5.1]
 ### Fix
 - Was not parsing booleans and number from secret manager
