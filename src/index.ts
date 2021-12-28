@@ -140,7 +140,7 @@ export function initSync(o: Options): void {
 
 function _init(o: Options & {sync: boolean}): Promise<void> | void {
     if (STATE.initialized) {
-        throw new Error('ConfigMan: Already initialized')
+        throw new Error('ConfigMan: Already initialised')
     } else if (!fs.existsSync(path.join(o.cwd || __dirname, 'config-man.json'))) {
         throw new Error('ConfigMan: You need to add a config-man.json file to your project root.')
     }
