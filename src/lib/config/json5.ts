@@ -7,15 +7,16 @@ import {OptionsConfigItemOptions} from './../../index'
 
 const readFileAsync = promisify(fs.readFile)
 
+function stringToFlattened(input: string): Record<string, any> {
+    return flatten<any, any>(json5.parse(input))
+}
+
 export default function getConfigJson(
     options: OptionsConfigItemOptions,
-): Promise<{[key: string]: any}> | {[key: string]: any} {
+): Promise<Record<string, any>> | Record<string, any> {
     if (options.sync) {
-        const content = fs.readFileSync(options.filePath, 'utf8')
-        return flatten<any, any>(json5.parse(content))
+        return stringToFlattened(fs.readFileSync(options.filePath, 'utf8'))
     }
 
-    return readFileAsync(options.filePath, 'utf8').then((content) =>
-        flatten<any, any>(json5.parse(content)),
-    )
+    return readFileAsync(options.filePath, 'utf8').then(stringToFlattened)
 }

@@ -140,7 +140,7 @@ export function initSync(o: Options): void {
 
 function _init(o: Options & {sync: boolean}): Promise<void> | void {
     if (STATE.initialized) {
-        throw new Error('ConfigMan: Already initialised')
+        throw new Error('ConfigMan: Already initialized')
     } else if (!fs.existsSync(path.join(o.cwd || __dirname, 'config-man.json'))) {
         throw new Error('ConfigMan: You need to add a config-man.json file to your project root.')
     }
@@ -152,7 +152,7 @@ function _init(o: Options & {sync: boolean}): Promise<void> | void {
             .toString('utf8')
         schema = JSON.parse(schemaRaw).schema
     } catch (error) {
-        throw new Error(`ConfigMan: schema load error: ${error.message}`)
+        throw new Error(`ConfigMan: schema load error: ${(error as Error).message}`)
     }
 
     const options: OptionsFinal = {

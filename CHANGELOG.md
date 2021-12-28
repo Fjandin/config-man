@@ -15,7 +15,7 @@
 
 ## [1.4.1]
 ### Changed
- - Update yarn.lock to fix vunerabilities
+ - Update yarn.lock to fix vulnerabilities
 
 ## [1.4.0]
 ### Changed
