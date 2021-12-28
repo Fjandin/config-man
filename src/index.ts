@@ -8,6 +8,7 @@ import typeDynamodb from './lib/config/dynamodb'
 import typeEnv from './lib/config/env'
 import typeJavascript from './lib/config/javascript'
 import typeJson from './lib/config/json'
+import typeJson5 from './lib/config/json5'
 import typeSecretManager from './lib/config/secret-manager'
 import {realTypeOf} from './lib/helpers'
 
@@ -26,6 +27,7 @@ export enum ConfigType {
     ENV = 'env',
     JAVASCRIPT = 'javascript',
     JSON = 'json',
+    JSON5 = 'json5',
     SECRET_MANAGER = 'secret-manager',
 }
 
@@ -68,6 +70,7 @@ const CONFIG_TYPE_METHODS: Record<ConfigType, ConfigTypeMethod> = {
     [ConfigType.ENV]: typeEnv,
     [ConfigType.JAVASCRIPT]: typeJavascript,
     [ConfigType.JSON]: typeJson,
+    [ConfigType.JSON5]: typeJson5,
     [ConfigType.SECRET_MANAGER]: typeSecretManager,
 }
 
@@ -149,7 +152,7 @@ function _init(o: Options & {sync: boolean}): Promise<void> | void {
             .toString('utf8')
         schema = JSON.parse(schemaRaw).schema
     } catch (error) {
-        throw new Error(`ConfigMan: schema load error: ${error.message}`)
+        throw new Error(`ConfigMan: schema load error: ${(error as Error).message}`)
     }
 
     const options: OptionsFinal = {

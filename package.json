@@ -1,6 +1,6 @@
 {
   "name": "@fjandin/config-man",
-  "version": "1.5.1",
+  "version": "1.6.0",
   "description": "Config manager",
   "main": "index.js",
   "author": "René Bischoff <rene.bischoff@gmail.com> (https://github.com/fjandin)",
@@ -25,7 +25,8 @@
     "build": "rm -rf dist; tsc -p tsconfig.build.json; cp package.json ./dist; cp README.md ./dist; cp LICENSE ./dist; cp SECURITY.md ./dist; cp .npmrc ./dist"
   },
   "dependencies": {
-    "flat": "^5.0.2"
+    "flat": "^5.0.2",
+    "json5": "^2.2.0"
   },
   "devDependencies": {
     "@types/flat": "^5.0.1",
