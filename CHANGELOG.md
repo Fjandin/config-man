@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.7.0]
+
+### Added
+- Add check script in order to identify missing keys as part of the CICD pipeline of an application using this package.
+
 ## [1.6.0]
 
 ### Added
