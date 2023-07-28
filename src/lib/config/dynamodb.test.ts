@@ -9,15 +9,6 @@ const configManJson = {
     ],
 }
 
-const awsSdk = {
-    config: {
-        update: () => null,
-    },
-    DynamoDB: {
-        DocumentClient: documentClient,
-    },
-}
-
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 function documentClient() {}
 documentClient.prototype.scan = (_params: any, callback: any) => {
@@ -29,13 +20,24 @@ documentClient.prototype.scan = (_params: any, callback: any) => {
     })
 }
 
-jest.mock('aws-sdk', () => awsSdk)
+const mockScanCommand = jest.fn()
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const mockDynamoDBClientSend = jest.fn().mockResolvedValue({
+    Items: [{test3: 2}, {'db.unknown': 'dynamo'}],
+})
+
+jest.mock('@aws-sdk/client-dynamodb', () => ({
+    ScanCommand: mockScanCommand,
+    DynamoDBClient: class MockedDynamoDBClient {
+        public send = mockDynamoDBClientSend
+    },
+}))
 
 import typeDynamodb from './dynamodb'
 
 describe('Config type dynamo db', () => {
     afterAll(() => {
-        jest.unmock('aws-sdk')
+        jest.unmock('@aws-sdk/client-dynamodb')
     })
 
     it('should get config', async () => {
@@ -49,13 +51,13 @@ describe('Config type dynamo db', () => {
     })
 
     it('should not handle sync (not supported)', async () => {
-        const result = () =>
-            typeDynamodb({
+        const funcToThrow = async () =>
+            await typeDynamodb({
                 sync: true,
                 schema: configManJson.schema,
                 tableName: 'Test',
                 region: 'eu-west-1',
             })
-        expect(result).toThrow('This type does not support sync')
+        await expect(funcToThrow()).rejects.toThrow('This type does not support sync')
     })
 })
