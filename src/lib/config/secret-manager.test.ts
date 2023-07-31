@@ -9,18 +9,15 @@ const configManJson = {
     ],
 }
 
-const mockGetSecretValue = jest.fn()
-const mockConfigUpdate = jest.fn()
-const mockAws = {
-    config: {
-        update: mockConfigUpdate,
-    },
-    SecretsManager: class MockedSecretsManager {
-        public getSecretValue = mockGetSecretValue
-    },
-}
+const mockSecretsManagerClientSend = jest.fn()
+const mockGetSecretValueCommand = jest.fn()
 
-jest.mock('aws-sdk', () => mockAws)
+jest.mock('@aws-sdk/client-secrets-manager', () => ({
+    GetSecretValueCommand: mockGetSecretValueCommand,
+    SecretsManagerClient: class MockedSecretsManagerClient {
+        public send = mockSecretsManagerClientSend
+    },
+}))
 
 import typeSecretManager from './secret-manager'
 
@@ -30,15 +27,13 @@ describe('Config type secret manager', () => {
     })
 
     it('should get config (boolean and number)', async () => {
-        mockGetSecretValue.mockImplementation((_params: any, callback: any) =>
-            callback(null, {
-                SecretString: JSON.stringify({
-                    test4: 'true',
-                    test3: '1234',
-                    unknown: 'false',
-                }),
+        mockSecretsManagerClientSend.mockResolvedValue({
+            SecretString: JSON.stringify({
+                test4: 'true',
+                test3: '1234',
+                unknown: 'false',
             }),
-        )
+        })
         const result = await typeSecretManager({
             sync: false,
             schema: configManJson.schema,
@@ -49,14 +44,12 @@ describe('Config type secret manager', () => {
     })
 
     it('should get config (text)', async () => {
-        mockGetSecretValue.mockImplementation((_params: any, callback: any) =>
-            callback(null, {
-                SecretString: JSON.stringify({
-                    'test1.test1a': 'foo',
-                    test3: 1,
-                }),
+        mockSecretsManagerClientSend.mockResolvedValue({
+            SecretString: JSON.stringify({
+                'test1.test1a': 'foo',
+                test3: 1,
             }),
-        )
+        })
         const result = await typeSecretManager({
             sync: false,
             schema: configManJson.schema,
@@ -70,11 +63,9 @@ describe('Config type secret manager', () => {
         const config = JSON.stringify({'test1.test1a': 'foo', test3: 1})
         const configBuffer = Buffer.from(config).toString('base64')
 
-        mockGetSecretValue.mockImplementation((_params: any, callback: any) =>
-            callback(null, {
-                SecretBinary: configBuffer,
-            }),
-        )
+        mockSecretsManagerClientSend.mockResolvedValue({
+            SecretBinary: configBuffer,
+        })
         const result = await typeSecretManager({
             sync: false,
             schema: configManJson.schema,
@@ -85,11 +76,9 @@ describe('Config type secret manager', () => {
     })
 
     it('should reject if config is empty', async () => {
-        mockGetSecretValue.mockImplementation((_params: any, callback: any) =>
-            callback(null, {
-                SecretString: undefined,
-            }),
-        )
+        mockSecretsManagerClientSend.mockResolvedValue({
+            SecretString: undefined,
+        })
         await expect(
             typeSecretManager({
                 sync: false,
@@ -101,11 +90,9 @@ describe('Config type secret manager', () => {
     })
 
     it('should reject if config is malformed', async () => {
-        mockGetSecretValue.mockImplementation((_params: any, callback: any) =>
-            callback(null, {
-                SecretString: '{{}',
-            }),
-        )
+        mockSecretsManagerClientSend.mockResolvedValue({
+            SecretString: '{{}',
+        })
         await expect(
             typeSecretManager({
                 sync: false,

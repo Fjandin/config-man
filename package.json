@@ -1,6 +1,6 @@
 {
   "name": "@fjandin/config-man",
-  "version": "1.7.0",
+  "version": "2.0.0",
   "description": "Config manager",
   "main": "index.js",
   "author": "René Bischoff <rene.bischoff@gmail.com> (https://github.com/fjandin)",
@@ -17,7 +17,7 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "peer": "yarn add --peer --frozen-lockfile aws-sdk@^2.895.0",
+    "peer": "yarn add --peer --frozen-lockfile @aws-sdk/client-secrets-manager@^3.379.0 @aws-sdk/client-dynamodb@^3.379.0",
     "lint": "eslint src --ext .ts,.js",
     "lint:fix": "eslint src --ext .ts,.js --fix",
     "typecheck": "tsc --noEmit",
@@ -46,6 +46,7 @@
     "typescript": "^4.2.4"
   },
   "peerDependencies": {
-    "aws-sdk": "^2.895.0"
+    "@aws-sdk/client-dynamodb": "^3.379.0",
+    "@aws-sdk/client-secrets-manager": "^3.379.0"
   }
 }
