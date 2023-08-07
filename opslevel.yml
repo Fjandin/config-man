@@ -1,0 +1,21 @@
+---
+version: 1
+service:
+  name: Config Man NodeJS Configuration Manager
+  lifecycle: generally_available
+  tier:
+  product:
+  owner: localisation
+  language: TypeScript
+  description: NodeJS Configuration Manager
+  aliases:
+    - "@pleo-io/config-man"
+  tags:
+  - key: type
+    value: library
+  repositories:
+  - name: pleo-io/config-man
+    path: "/"
+    provider: github
+  tools:
+  dependencies:
