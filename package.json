@@ -25,6 +25,8 @@
     "build": "rm -rf dist; tsc -p tsconfig.build.json; cp package.json ./dist; cp README.md ./dist; cp LICENSE ./dist; cp SECURITY.md ./dist; cp .npmrc ./dist"
   },
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.385.0",
+    "@aws-sdk/client-secrets-manager": "^3.385.0",
     "flat": "^5.0.2",
     "json5": "^2.2.0"
   },
@@ -48,5 +50,9 @@
   "peerDependencies": {
     "@aws-sdk/client-dynamodb": "^3.379.0",
     "@aws-sdk/client-secrets-manager": "^3.379.0"
-  }
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "packageManager": "yarn@1.22.19"
 }

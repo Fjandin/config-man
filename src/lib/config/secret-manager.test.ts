@@ -100,6 +100,6 @@ describe('Config type secret manager', () => {
                 secretName: 'Test',
                 region: 'eu-west-1',
             }),
-        ).rejects.toThrow('Unexpected token { in JSON at position 1')
+        ).rejects.toThrow()
     })
 })

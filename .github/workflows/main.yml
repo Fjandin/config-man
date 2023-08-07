@@ -1,8 +1,6 @@
-name: Release
-on:
-    push:
-        branches:
-            - main
+name: Validate changes
+on: push
+
 jobs:
     check:
         name: 'Check, Lint, Test'
@@ -13,8 +11,8 @@ jobs:
               with:
                   node-version: 20
             - run: |
-                yarn --frozen-lockfile --ignore-engines --ignore-optional --non-interactive --silent --ignore-scripts --production=false
-                yarn peer
+                  yarn --frozen-lockfile --ignore-engines --ignore-optional --non-interactive --silent --ignore-scripts --production=false
+                  yarn peer
             - name: TypeScript Check
               run: yarn typecheck
             - name: Lint
@@ -25,21 +23,23 @@ jobs:
     release:
         name: Release
         runs-on: ubuntu-latest
+        if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+        needs: check
         steps:
-          - name: Checkout code
-            uses: actions/checkout@v3
-            with:
-              persist-credentials: false
-              fetch-depth: 0
-    
-          - uses: webfactory/ssh-agent@v0.5.4
-            with:
-              ssh-private-key: ${{ secrets.SSH_RELEASE_KEY }}
-    
-          - name: Release
-            run: |
-              npx --package=@auto-it/git-tag --package=@auto-it/omit-release-notes --package=auto -- auto shipit
-            env:
-              GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            - name: Checkout code
+              uses: actions/checkout@v3
+              with:
+                  persist-credentials: false
+                  fetch-depth: 0
+
+            - uses: webfactory/ssh-agent@v0.5.4
+              with:
+                  ssh-private-key: ${{ secrets.SSH_RELEASE_KEY }}
+
+            - name: Release
+              run: |
+                  npx --package=@auto-it/git-tag --package=@auto-it/omit-release-notes --package=auto -- auto shipit
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
