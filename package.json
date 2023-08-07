@@ -52,7 +52,7 @@
     "@aws-sdk/client-secrets-manager": "^3.379.0"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=18"
   },
   "packageManager": "yarn@1.22.19",
   "files": [
