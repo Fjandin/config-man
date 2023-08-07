@@ -2,7 +2,7 @@
 
 ## Install
 
-`yarn add @fjandin/config-man`
+`yarn add @pleo-io/config-man`
 
 ## Initialize
 
@@ -15,7 +15,7 @@ Add `[ProjectRoot]/config-man.json` file
 ```
 
 ```ts
-import * as configMan from '@fjandin/config-man'
+import * as configMan from '@pleo-io/config-man'
 
 configMan.init({
     cwd: __dirname,

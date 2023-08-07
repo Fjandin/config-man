@@ -1,8 +1,8 @@
-import * as AWS from 'aws-sdk'
+import {DynamoDBClient, ScanCommand} from '@aws-sdk/client-dynamodb'
 
 import {OptionsConfigItemOptions} from './../../index'
 
-export default function getConfigAwsDynamo(
+export default async function getConfigAwsDynamo(
     options: OptionsConfigItemOptions,
 ): Promise<{[key: string]: any}> {
     if (options.sync) {
@@ -11,23 +11,9 @@ export default function getConfigAwsDynamo(
     const scanParams = {TableName: options.tableName, ConsistentRead: true}
     const awsConfig = {region: options.region}
 
-    AWS.config.update(awsConfig)
-    const dynamodb = new AWS.DynamoDB.DocumentClient()
-    const resultPromise: Promise<AWS.DynamoDB.DocumentClient.ScanOutput> = new Promise(
-        (resolve, reject) => {
-            dynamodb.scan(scanParams, (err, data) => {
-                if (err) {
-                    return reject(err)
-                }
-                return resolve(data)
-            })
-        },
-    )
+    const dynamodb = new DynamoDBClient(awsConfig)
+    const result = await dynamodb.send(new ScanCommand(scanParams))
 
-    return resultPromise.then((result) => {
-        const config = result.Items
-            ? result.Items.reduce((a, b) => ({...a, [b.key]: b.value}), {})
-            : {}
-        return config
-    })
+    const config = result.Items ? result.Items.reduce((a, b) => ({...a, ...b}), {}) : {}
+    return config
 }

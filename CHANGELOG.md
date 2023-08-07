@@ -1,5 +1,10 @@
 # Changelog
 
+## [2.0.0]
+
+### Added
+- Upgraded from aws-sdk v2 to client specific v3 libraries (@aws-sdk/client-dynamodb & @aws-sdk/client-secrets-manager)
+
 ## [1.7.0]
 
 ### Added

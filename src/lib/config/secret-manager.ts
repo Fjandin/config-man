@@ -1,10 +1,10 @@
-import * as AWS from 'aws-sdk'
+import {SecretsManagerClient, GetSecretValueCommand} from '@aws-sdk/client-secrets-manager'
 
 import {parseValue} from './../helpers'
 
 import {OptionsConfigItemOptions} from './../../index'
 
-export default function getConfigAwsDynamo(
+export default async function getConfigAwsDynamo(
     options: OptionsConfigItemOptions,
 ): Promise<{[key: string]: any}> {
     if (options.sync) {
@@ -15,39 +15,31 @@ export default function getConfigAwsDynamo(
     const params = {SecretId: options.secretName}
     const awsConfig = {region: options.region}
 
-    AWS.config.update(awsConfig)
-    const client = new AWS.SecretsManager(awsConfig)
+    const client = new SecretsManagerClient(awsConfig)
 
-    return new Promise((resolve, reject) => {
-        client.getSecretValue(params, (err, data) => {
-            if (err) {
-                return reject(err)
+    const secretValue = await client.send(new GetSecretValueCommand(params))
+
+    let secret: string | undefined
+    if ('SecretString' in secretValue) {
+        secret = secretValue.SecretString
+    } else {
+        const buffer = secretValue.SecretBinary
+            ? Buffer.from(secretValue.SecretBinary?.toString(), 'base64')
+            : undefined
+        secret = buffer?.toString('ascii')
+    }
+    if (!secret) {
+        throw new Error('No secrets returned')
+    }
+    const secretObj = JSON.parse(secret)
+    const result = schema.reduce((a: {[key: string]: any}, schemaItem) => {
+        if (secretObj[schemaItem.key]) {
+            return {
+                ...a,
+                [schemaItem.key]: parseValue(schemaItem, secretObj[schemaItem.key]),
             }
-            let secret: string | undefined
-            if ('SecretString' in data) {
-                secret = data.SecretString
-            } else {
-                const buffer = Buffer.from(data.SecretBinary as string, 'base64')
-                secret = buffer.toString('ascii')
-            }
-            if (!secret) {
-                return reject(new Error('No secrets returned'))
-            }
-            try {
-                const secretObj = JSON.parse(secret)
-                const result = schema.reduce((a: {[key: string]: any}, schemaItem) => {
-                    if (secretObj[schemaItem.key]) {
-                        return {
-                            ...a,
-                            [schemaItem.key]: parseValue(schemaItem, secretObj[schemaItem.key]),
-                        }
-                    }
-                    return a
-                }, secretObj)
-                return resolve(result)
-            } catch (e) {
-                return reject(e)
-            }
-        })
-    })
+        }
+        return a
+    }, secretObj)
+    return result
 }
