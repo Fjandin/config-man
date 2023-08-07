@@ -1,3 +1,15 @@
+# v2.0.3 (Mon Aug 07 2023)
+
+#### ⚠️ Pushed to `main`
+
+- chore(node): downgrade to node 18 ([@edwarddamato](https://github.com/edwarddamato))
+
+#### Authors: 1
+
+- Edward D'Amato ([@edwarddamato](https://github.com/edwarddamato))
+
+---
+
 # v2.0.2 (Mon Aug 07 2023)
 
 #### 🐛 Bug Fix
