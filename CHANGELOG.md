@@ -1,3 +1,53 @@
+# v2.0.1 (Mon Aug 07 2023)
+
+#### 🐛 Bug Fix
+
+- feat(aws-sdk): upgrade aws-sdk to v3 [#1](https://github.com/pleo-io/config-man/pull/1) ([@edwarddamato](https://github.com/edwarddamato))
+
+#### ⚠️ Pushed to `main`
+
+- Update the release workflow ([@andersfischernielsen](https://github.com/andersfischernielsen))
+- empty commit ([@edwarddamato](https://github.com/edwarddamato))
+- Fix dependencies ([@Fjandin](https://github.com/Fjandin))
+- Fix package info and publish ([@Fjandin](https://github.com/Fjandin))
+- Fix publish ([@Fjandin](https://github.com/Fjandin))
+- Create SECURITY.md ([@Fjandin](https://github.com/Fjandin))
+- Update issue templates ([@Fjandin](https://github.com/Fjandin))
+- Update package.json ([@Fjandin](https://github.com/Fjandin))
+- Fix tests ([@Fjandin](https://github.com/Fjandin))
+- Workflow ([@Fjandin](https://github.com/Fjandin))
+- Update main.workflow ([@Fjandin](https://github.com/Fjandin))
+- test ([@Fjandin](https://github.com/Fjandin))
+- Merge branch 'pr-test' of github.com:Fjandin/fjandin-config-man into pr-test-2 ([@Fjandin](https://github.com/Fjandin))
+- Update README.md ([@Fjandin](https://github.com/Fjandin))
+- Update test.yaml ([@Fjandin](https://github.com/Fjandin))
+- Create test.yaml ([@Fjandin](https://github.com/Fjandin))
+- Update publish.yaml ([@Fjandin](https://github.com/Fjandin))
+- test and publish ([@Fjandin](https://github.com/Fjandin))
+- Update nodejs.yml ([@Fjandin](https://github.com/Fjandin))
+- Create CODE_OF_CONDUCT.md ([@Fjandin](https://github.com/Fjandin))
+- Create LICENSE ([@Fjandin](https://github.com/Fjandin))
+- upgrades ([@Fjandin](https://github.com/Fjandin))
+- bump ([@Fjandin](https://github.com/Fjandin))
+- fix ([@Fjandin](https://github.com/Fjandin))
+- deploy ([@Fjandin](https://github.com/Fjandin))
+- remove token ([@Fjandin](https://github.com/Fjandin))
+- circleci ([@Fjandin](https://github.com/Fjandin))
+- Use fs to load schema and not require ([@Fjandin](https://github.com/Fjandin))
+- beta.8 ([@Fjandin](https://github.com/Fjandin))
+- v1 ([@Fjandin](https://github.com/Fjandin))
+- changes ([@Fjandin](https://github.com/Fjandin))
+- wip ([@Fjandin](https://github.com/Fjandin))
+- config-man ([@Fjandin](https://github.com/Fjandin))
+
+#### Authors: 3
+
+- Anders Fischer-Nielsen ([@andersfischernielsen](https://github.com/andersfischernielsen))
+- Edward D'Amato ([@edwarddamato](https://github.com/edwarddamato))
+- René Bischoff ([@Fjandin](https://github.com/Fjandin))
+
+---
+
 # Changelog
 
 ## [2.0.0]
