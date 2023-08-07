@@ -1,31 +1,45 @@
-name: Config-Man-Workflow
+name: Release
 on:
-    pull_request:
-        branches:
-            - master
     push:
         branches:
-            - master
+            - main
 jobs:
     check:
-        name: 'Check, Lint, Test and Publish'
+        name: 'Check, Lint, Test'
         runs-on: ubuntu-latest
-        env:
-            NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         steps:
-            - uses: actions/checkout@v1
+            - uses: actions/checkout@v3
+            - uses: actions/setup-node@v3
               with:
-                  fetch-depth: 1
-            - uses: actions/setup-node@v1
-              with:
-                  node-version: 12
-            - run: 'yarn --frozen-lockfile --ignore-engines --ignore-optional --non-interactive --silent --ignore-scripts --production=false; yarn peer'
+                  node-version: 20
+            - run: |
+                yarn --frozen-lockfile --ignore-engines --ignore-optional --non-interactive --silent --ignore-scripts --production=false
+                yarn peer
             - name: TypeScript Check
-              run: 'yarn typecheck'
+              run: yarn typecheck
             - name: Lint
-              run: 'yarn lint'
+              run: yarn lint
             - name: Test
-              run: 'yarn test'
-            - name: 'Publish'
-              if: github.event_name == 'push'
-              run: yarn build && npm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}" && cd dist && npm publish
+              run: yarn test
+
+    release:
+        name: Release
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout code
+            uses: actions/checkout@v3
+            with:
+              persist-credentials: false
+              fetch-depth: 0
+    
+          - uses: webfactory/ssh-agent@v0.5.4
+            with:
+              ssh-private-key: ${{ secrets.SSH_RELEASE_KEY }}
+    
+          - name: Release
+            run: |
+              npx --package=@auto-it/git-tag --package=@auto-it/omit-release-notes --package=auto -- auto shipit
+            env:
+              GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
