@@ -2,7 +2,7 @@
   "name": "@pleo-io/config-man",
   "version": "2.0.1",
   "description": "Config manager",
-  "main": "index.js",
+  "main": "dist/index.js",
   "author": "René Bischoff <rene.bischoff@gmail.com> (https://github.com/fjandin)",
   "homepage": "https://github.com/pleo-io/config-man",
   "readme": "README.md",
@@ -22,7 +22,7 @@
     "lint:fix": "eslint src --ext .ts,.js --fix",
     "typecheck": "tsc --noEmit",
     "test": "jest",
-    "build": "rm -rf dist; tsc -p tsconfig.build.json; cp package.json ./dist; cp README.md ./dist; cp LICENSE ./dist; cp SECURITY.md ./dist; cp .npmrc ./dist"
+    "build": "rm -rf dist; tsc -p tsconfig.build.json"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.385.0",
@@ -54,5 +54,8 @@
   "engines": {
     "node": ">=20"
   },
-  "packageManager": "yarn@1.22.19"
+  "packageManager": "yarn@1.22.19",
+  "files": [
+    "dist"
+  ]
 }
