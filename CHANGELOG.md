@@ -1,3 +1,20 @@
+# v2.0.2 (Mon Aug 07 2023)
+
+#### 🐛 Bug Fix
+
+- chore(package): publish dist folder to npm [#4](https://github.com/pleo-io/config-man/pull/4) ([@edwarddamato](https://github.com/edwarddamato))
+
+#### 🏠 Internal
+
+- Ensure packages, package managers, engine configuration [#3](https://github.com/pleo-io/config-man/pull/3) ([@andersfischernielsen](https://github.com/andersfischernielsen))
+
+#### Authors: 2
+
+- Anders Fischer-Nielsen ([@andersfischernielsen](https://github.com/andersfischernielsen))
+- Edward D'Amato ([@edwarddamato](https://github.com/edwarddamato))
+
+---
+
 # v2.0.1 (Mon Aug 07 2023)
 
 #### 🐛 Bug Fix
