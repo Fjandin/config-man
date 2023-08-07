@@ -1,3 +1,15 @@
+# v2.0.4 (Mon Aug 07 2023)
+
+#### 🐛 Bug Fix
+
+- fix(package): add yarn install and build steps before publish [#5](https://github.com/pleo-io/config-man/pull/5) ([@edwarddamato](https://github.com/edwarddamato))
+
+#### Authors: 1
+
+- Edward D'Amato ([@edwarddamato](https://github.com/edwarddamato))
+
+---
+
 # v2.0.3 (Mon Aug 07 2023)
 
 #### ⚠️ Pushed to `main`
