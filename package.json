@@ -5,7 +5,6 @@
   "main": "dist/index.js",
   "author": "René Bischoff <rene.bischoff@gmail.com> (https://github.com/fjandin)",
   "homepage": "https://github.com/pleo-io/config-man",
-  "readme": "README.md",
   "repository": {
     "type": "git",
     "url": "https://github.com/pleo-io/config-man.git"

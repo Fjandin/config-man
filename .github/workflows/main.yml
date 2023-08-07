@@ -31,10 +31,19 @@ jobs:
               with:
                   persist-credentials: false
                   fetch-depth: 0
+            
+            - uses: actions/setup-node@v3
+              with:
+                  node-version: 18
+
+            - run: yarn install --frozen-lockfile
 
             - uses: webfactory/ssh-agent@v0.5.4
               with:
                   ssh-private-key: ${{ secrets.SSH_RELEASE_KEY }}
+            
+            - name: Build
+              run: yarn build
 
             - name: Release
               run: |
