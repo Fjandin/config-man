@@ -1,0 +1,4 @@
+# Global owners, applies to all files with no specific rules defined later in this file.
+# By default, this should be the stewards for the Moon.
+
+*  @pleo-io/localisation
